@@ -410,6 +410,173 @@ function Nav() {
   );
 }
 
+/* ── Hero chart ──────────────────────────────────────── */
+const HC_DATA   = [1200, 1380, 1290, 1620, 1980, 1850, 2240, 2680, 2510, 3100, 3650, 4200];
+const HC_MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+function HeroChart() {
+  const VW = 520, VH = 220;
+  const PL = 48, PR = 16, PT = 16, PB = 34;
+  const CW = VW - PL - PR;
+  const CH = VH - PT - PB;
+  const MIN_V = 900, MAX_V = 4600;
+
+  function px(i) { return PL + (i / (HC_DATA.length - 1)) * CW; }
+  function py(v) { return PT + CH - ((v - MIN_V) / (MAX_V - MIN_V)) * CH; }
+
+  const pts = HC_DATA.map((v, i) => ({ x: px(i), y: py(v) }));
+
+  function smoothPath(points) {
+    let d = `M ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}`;
+    for (let i = 0; i < points.length - 1; i++) {
+      const p0 = points[Math.max(0, i - 1)];
+      const p1 = points[i];
+      const p2 = points[i + 1];
+      const p3 = points[Math.min(points.length - 1, i + 2)];
+      const cp1x = p1.x + (p2.x - p0.x) / 6;
+      const cp1y = p1.y + (p2.y - p0.y) / 6;
+      const cp2x = p2.x - (p3.x - p1.x) / 6;
+      const cp2y = p2.y - (p3.y - p1.y) / 6;
+      d += ` C ${cp1x.toFixed(1)} ${cp1y.toFixed(1)}, ${cp2x.toFixed(1)} ${cp2y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
+    }
+    return d;
+  }
+
+  const linePath  = smoothPath(pts);
+  const last      = pts[pts.length - 1];
+  const areaPath  = `${linePath} L ${last.x.toFixed(1)} ${(PT + CH).toFixed(1)} L ${PL} ${(PT + CH).toFixed(1)} Z`;
+  const yTicks    = [1200, 2000, 3000, 4200];
+
+  return (
+    <m.div
+      initial={{ opacity: 0, x: 40 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.9, delay: 0.35, ease: EASE }}
+      style={{
+        background: "rgba(14,14,14,0.9)",
+        border: `1px solid ${B.border}`,
+        borderRadius: 20,
+        padding: "22px 22px 16px",
+        boxShadow: `0 0 60px rgba(232,96,26,0.07), inset 0 1px 0 rgba(255,255,255,0.05)`,
+      }}
+    >
+      {/* Card header */}
+      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 18 }}>
+        <div>
+          <p style={{ color: B.muted, fontSize: 10, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 5 }}>
+            Organic Traffic
+          </p>
+          <p style={{ color: B.white, fontSize: 24, fontWeight: 800, lineHeight: 1, letterSpacing: "-0.02em" }}>
+            4,200 <span style={{ fontSize: 13, fontWeight: 400, color: B.muted }}>visits / mo</span>
+          </p>
+        </div>
+        <div style={{
+          display: "flex", alignItems: "center", gap: 5,
+          background: "rgba(45,189,90,0.1)", border: "1px solid rgba(45,189,90,0.2)",
+          borderRadius: 20, padding: "5px 11px",
+        }}>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#2dbd5a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M7 17L17 7M7 7h10v10"/>
+          </svg>
+          <span style={{ color: "#2dbd5a", fontSize: 12, fontWeight: 700 }}>+350% YoY</span>
+        </div>
+      </div>
+
+      {/* SVG chart */}
+      <svg viewBox={`0 0 ${VW} ${VH}`} style={{ width: "100%", display: "block", overflow: "visible" }}>
+        <defs>
+          <linearGradient id="hcArea" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stopColor={B.orange} stopOpacity="0.3"/>
+            <stop offset="100%" stopColor={B.orange} stopOpacity="0"/>
+          </linearGradient>
+          <filter id="hcGlow" x="-20%" y="-40%" width="140%" height="180%">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        {/* Grid */}
+        {yTicks.map(v => (
+          <line key={v} x1={PL} y1={py(v)} x2={VW - PR} y2={py(v)}
+            stroke="rgba(255,255,255,0.055)" strokeWidth="1"/>
+        ))}
+
+        {/* Y labels */}
+        {yTicks.map(v => (
+          <text key={v} x={PL - 8} y={py(v) + 4} textAnchor="end"
+            fontSize="9" fill="rgba(255,255,255,0.32)" fontFamily="sans-serif">
+            {v >= 1000 ? `${(v / 1000).toFixed(v % 1000 === 0 ? 0 : 1)}K` : v}
+          </text>
+        ))}
+
+        {/* X labels — every other month */}
+        {HC_MONTHS.map((lbl, i) => i % 2 === 0 && (
+          <text key={lbl} x={px(i)} y={VH - 4} textAnchor="middle"
+            fontSize="9" fill="rgba(255,255,255,0.3)" fontFamily="sans-serif">
+            {lbl}
+          </text>
+        ))}
+
+        {/* Area fill */}
+        <m.path d={areaPath} fill="url(#hcArea)"
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+          transition={{ duration: 1.2, delay: 1.4 }}/>
+
+        {/* Line draw */}
+        <m.path d={linePath} fill="none"
+          stroke={B.orange} strokeWidth="2.5"
+          strokeLinecap="round" strokeLinejoin="round"
+          filter="url(#hcGlow)"
+          initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
+          transition={{ duration: 2.2, delay: 0.5, ease: "easeInOut" }}/>
+
+        {/* End dot */}
+        <m.circle cx={last.x} cy={last.y} r={5} fill={B.orange}
+          filter="url(#hcGlow)"
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+          transition={{ delay: 2.5, duration: 0.3 }}/>
+
+        {/* Pulse rings */}
+        <m.circle cx={last.x} cy={last.y} r={12} fill="none"
+          stroke={B.orange} strokeWidth="1.5"
+          animate={{ opacity: [0.65, 0] }}
+          transition={{ delay: 2.8, duration: 1.6, repeat: Infinity, ease: "easeOut" }}/>
+        <m.circle cx={last.x} cy={last.y} r={20} fill="none"
+          stroke={B.orange} strokeWidth="0.8"
+          animate={{ opacity: [0.35, 0] }}
+          transition={{ delay: 3.0, duration: 1.8, repeat: Infinity, ease: "easeOut" }}/>
+
+        {/* Callout bubble */}
+        <m.g initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+          transition={{ delay: 2.65, duration: 0.4 }}>
+          <rect x={last.x - 46} y={last.y - 42} width={92} height={26} rx={6} fill={B.orange}/>
+          <text x={last.x} y={last.y - 25} textAnchor="middle"
+            fontSize="11" fontWeight="700" fill="white" fontFamily="sans-serif">
+            4,200 / mo
+          </text>
+          <polygon
+            points={`${last.x - 6},${last.y - 16} ${last.x + 6},${last.y - 16} ${last.x},${last.y - 8}`}
+            fill={B.orange}/>
+        </m.g>
+      </svg>
+
+      {/* Bottom stats */}
+      <div style={{ display: "flex", marginTop: 14, paddingTop: 14, borderTop: `1px solid ${B.border}` }}>
+        {[
+          { label: "Baseline",    val: "1,200/mo" },
+          { label: "After 12 mo", val: "4,200/mo" },
+          { label: "Avg MoM",     val: "+14.8%"   },
+        ].map(({ label, val }) => (
+          <div key={label} style={{ flex: 1, textAlign: "center" }}>
+            <p style={{ color: B.white, fontSize: 13, fontWeight: 700, lineHeight: 1 }}>{val}</p>
+            <p style={{ color: B.muted, fontSize: 10, marginTop: 4 }}>{label}</p>
+          </div>
+        ))}
+      </div>
+    </m.div>
+  );
+}
+
 /* ── Hero ─────────────────────────────────────────────── */
 const HERO_STATS = [
   { val: "+340%", label: "Organic Growth",   sub: "Tokopedia" },
@@ -425,134 +592,64 @@ const HERO_AVATARS = [
 ];
 
 function Hero() {
-  const wrapRef   = React.useRef(null);
-  const canvasRef = React.useRef(null);
-  const imgs      = React.useRef([]);
-  const curFrame  = React.useRef(0);
-  const rafId     = React.useRef(0);
-
-  const paint = React.useRef((n) => {
-    const canvas = canvasRef.current;
-    const img    = imgs.current[n];
-    if (!canvas || !img || !img.complete || !img.naturalWidth) return;
-    const W = canvas.offsetWidth  || window.innerWidth;
-    const H = canvas.offsetHeight || window.innerHeight;
-    if (canvas.width !== W || canvas.height !== H) { canvas.width = W; canvas.height = H; }
-    const ctx   = canvas.getContext("2d");
-    const scale = Math.max(W / img.naturalWidth, H / img.naturalHeight);
-    ctx.drawImage(img,
-      (W - img.naturalWidth  * scale) / 2,
-      (H - img.naturalHeight * scale) / 2,
-      img.naturalWidth * scale, img.naturalHeight * scale
-    );
-  });
-
-  React.useEffect(() => {
-    const TOTAL = 120;
-    const EAGER = 12;
-    function loadRange(start, end) {
-      for (let i = start; i < end; i++) {
-        const img = new Image();
-        img.src = `/frames/ezgif-frame-${String(i + 1).padStart(3, "0")}.jpg`;
-        img.onload = () => { if (i === curFrame.current) paint.current(i); };
-        imgs.current[i] = img;
-      }
-    }
-    loadRange(0, EAGER);
-    const deferred = () => loadRange(EAGER, TOTAL);
-    if ("requestIdleCallback" in window) {
-      window.requestIdleCallback(deferred, { timeout: 3000 });
-    } else {
-      setTimeout(deferred, 400);
-    }
-  }, []);
-
-  /* Scroll → frame + hero fade */
-  React.useEffect(() => {
-    const HERO_FADE_START = 0.72;
-    const HERO_FADE_END   = 0.88;
-
-    function update() {
-      const wrap = wrapRef.current;
-      if (!wrap) return;
-      const { top, height } = wrap.getBoundingClientRect();
-      const scrollable = height - window.innerHeight;
-      if (scrollable <= 0) return;
-      const t = Math.max(0, Math.min(1, -top / scrollable));
-      const n = Math.min(119, Math.floor(t * 120));
-      curFrame.current = n;
-      paint.current(n);
-
-      const heroEl = document.getElementById("hero-content");
-      if (heroEl) {
-        const op = t < HERO_FADE_START ? 1
-          : t < HERO_FADE_END ? 1 - (t - HERO_FADE_START) / (HERO_FADE_END - HERO_FADE_START)
-          : 0;
-        heroEl.style.opacity   = op;
-        heroEl.style.transform = `translateY(${(1 - Math.max(op, 0)) * -28}px)`;
-      }
-    }
-
-    function onScroll() {
-      cancelAnimationFrame(rafId.current);
-      rafId.current = requestAnimationFrame(update);
-    }
-    window.addEventListener("scroll", onScroll, { passive: true });
-    requestAnimationFrame(update);
-    return () => { window.removeEventListener("scroll", onScroll); cancelAnimationFrame(rafId.current); };
-  }, []);
-
-  const pad = "max(24px, calc((100vw - 1152px) / 2))";
-
   return (
-    <div ref={wrapRef} id="results" style={{ height: "200vh", position: "relative", background: B.dark }}>
+    <section
+      id="results"
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        position: "relative",
+        background: B.dark,
+        overflow: "hidden",
+      }}
+    >
       <style>{`
         @media (max-width: 767px) {
-          #hero-content {
-            width: calc(100% - 48px) !important;
-            left: 24px !important;
-            right: 24px !important;
-            padding-top: 96px !important;
+          #hero-inner {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            padding-top: 100px !important;
+            padding-bottom: 60px !important;
+            gap: 36px !important;
           }
-          #hero-stats-right { display: none !important; }
-          #hero-stats-mobile { display: flex !important; }
-        }
-        @media (min-width: 768px) {
-          #hero-stats-mobile { display: none !important; }
+          #hero-copy  { width: 100% !important; }
+          #hero-chart { width: 100% !important; }
         }
       `}</style>
-      <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
 
-        {/* ── Frame animation canvas ── */}
-        <canvas ref={canvasRef} style={{ width: "100%", height: "100%", display: "block" }} />
+      {/* ── Backgrounds ── */}
+      <div aria-hidden="true" style={{
+        position: "absolute", inset: 0, pointerEvents: "none",
+        background: "radial-gradient(ellipse 70% 60% at 62% 50%, rgba(232,96,26,0.055) 0%, transparent 68%)",
+      }}/>
+      <div aria-hidden="true" style={{
+        position: "absolute", inset: 0, pointerEvents: "none",
+        background: "radial-gradient(ellipse 48% 52% at 4% 98%, rgba(200,65,8,0.3) 0%, transparent 62%)",
+      }}/>
+      {/* Dot grid */}
+      <div aria-hidden="true" style={{
+        position: "absolute", inset: 0, pointerEvents: "none", opacity: 0.04,
+        backgroundImage: "radial-gradient(rgba(255,255,255,0.9) 1px, transparent 1px)",
+        backgroundSize: "32px 32px",
+      }}/>
 
-        {/* ── Gradient overlays ── */}
-        {/* Left dark panel for text legibility */}
-        <div aria-hidden="true" style={{
-          position: "absolute", inset: 0, pointerEvents: "none",
-          background: [
-            `linear-gradient(to right, rgba(6,6,6,0.97) 0%, rgba(6,6,6,0.88) 30%, rgba(6,6,6,0.45) 55%, rgba(6,6,6,0.15) 72%, transparent 85%)`,
-            `linear-gradient(to bottom, rgba(6,6,6,0.55) 0%, transparent 12%, transparent 82%, rgba(6,6,6,0.7) 100%)`,
-          ].join(","),
-        }} />
-
-        {/* Warm orange glow at bottom-left */}
-        <div aria-hidden="true" style={{
-          position: "absolute", inset: 0, pointerEvents: "none",
-          background: "radial-gradient(ellipse 55% 45% at 5% 105%, rgba(200,65,8,0.38) 0%, transparent 65%)",
-        }} />
-
-        {/* ── Left content panel ── */}
-        <div id="hero-content" style={{
-          position: "absolute", top: 0, bottom: 0,
-          left: pad,
-          width: "min(500px, 46vw)",
-          display: "flex", flexDirection: "column", justifyContent: "center",
-          paddingTop: 80,
-          zIndex: 2,
-          transition: "opacity 0.1s, transform 0.1s",
-        }}>
-          {/* Eyebrow */}
+      {/* ── Content row ── */}
+      <div
+        id="hero-inner"
+        style={{
+          position: "relative", zIndex: 2,
+          width: "100%",
+          maxWidth: 1200,
+          margin: "0 auto",
+          padding: "80px max(24px, calc((100vw - 1200px) / 2))",
+          display: "flex",
+          alignItems: "center",
+          gap: 56,
+        }}
+      >
+        {/* ── Left copy ── */}
+        <div id="hero-copy" style={{ flex: "0 0 auto", width: "min(480px, 46%)" }}>
           <m.p
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -562,7 +659,6 @@ function Hero() {
             Rank. Grow. Dominate.
           </m.p>
 
-          {/* H1 */}
           <m.h1
             initial={{ opacity: 0, y: 36, filter: "blur(8px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -574,7 +670,6 @@ function Hero() {
             <em style={{ color: B.orange, fontStyle: "italic", fontWeight: 800 }}>Agency.</em>
           </m.h1>
 
-          {/* Subtitle */}
           <m.p
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
@@ -585,7 +680,6 @@ function Hero() {
             ChatGPT &amp; Gemini — and turn organic traffic into loyal customers.
           </m.p>
 
-          {/* CTAs */}
           <m.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
@@ -632,14 +726,12 @@ function Hero() {
             </a>
           </m.div>
 
-          {/* Social proof */}
           <m.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.58, ease: EASE }}
             style={{ display: "flex", alignItems: "center", gap: 14 }}
           >
-            {/* Avatar stack */}
             <div style={{ display: "flex" }}>
               {HERO_AVATARS.map(({ abbr, bg }, i) => (
                 <div key={abbr} style={{
@@ -663,72 +755,14 @@ function Hero() {
               </p>
             </div>
           </m.div>
-
-          {/* Mobile-only stats row */}
-          <div id="hero-stats-mobile" style={{ display: "none", gap: 8, marginTop: 20 }}>
-            {HERO_STATS.map(({ val, label, sub }) => (
-              <div key={label} style={{
-                flex: 1,
-                background: "rgba(10,10,10,0.75)",
-                backdropFilter: "blur(14px)",
-                border: `1px solid ${B.border}`,
-                borderRadius: 10,
-                padding: "10px 10px",
-                textAlign: "center",
-              }}>
-                <p style={{ color: B.white, fontSize: 18, fontWeight: 800, lineHeight: 1 }}>{val}</p>
-                <p style={{ color: B.dim, fontSize: 9, marginTop: 3, lineHeight: 1.3 }}>{label}</p>
-                <p style={{ color: B.muted, fontSize: 8, marginTop: 1 }}>{sub}</p>
-              </div>
-            ))}
-          </div>
         </div>
 
-        {/* ── Right stats panel (desktop only) ── */}
-        <div id="hero-stats-right" style={{
-          position: "absolute", right: pad,
-          top: "50%", transform: "translateY(-50%)",
-          display: "flex", flexDirection: "column", gap: 14,
-          zIndex: 2,
-        }}>
-          {HERO_STATS.map(({ val, label, sub }, i) => (
-            <m.div
-              key={label}
-              initial={{ opacity: 0, x: 24 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 + i * 0.12, ease: EASE }}
-              style={{
-                background: "rgba(10,10,10,0.72)",
-                backdropFilter: "blur(14px) saturate(1.4)",
-                border: `1px solid ${B.border}`,
-                borderRadius: 14,
-                padding: "16px 22px",
-                minWidth: 148,
-              }}
-            >
-              <p style={{ color: B.white, fontSize: 26, fontWeight: 800, lineHeight: 1, letterSpacing: "-0.02em" }}>{val}</p>
-              <p style={{ color: B.dim,   fontSize: 12, marginTop: 5, lineHeight: 1.35 }}>{label}</p>
-              <p style={{ color: B.muted, fontSize: 10, marginTop: 2 }}>{sub}</p>
-            </m.div>
-          ))}
+        {/* ── Right chart ── */}
+        <div id="hero-chart" style={{ flex: 1, minWidth: 0 }}>
+          <HeroChart />
         </div>
-
-        {/* Scroll cue */}
-        <div style={{
-          position: "absolute", bottom: 24, left: "50%", transform: "translateX(-50%)",
-          color: "rgba(255,255,255,0.22)", fontSize: 10,
-          fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase",
-          display: "flex", flexDirection: "column", alignItems: "center", gap: 5,
-          zIndex: 2,
-        }}>
-          <span>Scroll</span>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-            <path d="M12 5v14M5 12l7 7 7-7"/>
-          </svg>
-        </div>
-
       </div>
-    </div>
+    </section>
   );
 }
 
