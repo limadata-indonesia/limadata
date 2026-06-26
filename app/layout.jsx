@@ -1,4 +1,13 @@
+import { Poppins } from "next/font/google";
 import "./globals.css";
+
+const poppins = Poppins({
+  weight: ["300", "400", "500", "600", "700", "800"],
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-poppins",
+  preload: true,
+});
 
 export const metadata = {
   title: "Jasa SEO Indonesia Terpercaya | Limadata — Agency SEO & GEO",
@@ -7,12 +16,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="id">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-      </head>
+    <html lang="id" className={poppins.variable}>
       <body>{children}</body>
     </html>
   );

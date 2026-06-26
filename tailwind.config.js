@@ -13,7 +13,7 @@ module.exports = {
         tint:    "#EFF6FF",
       },
       fontFamily: {
-        sans: ["Poppins", "sans-serif"],
+        sans: ["var(--font-poppins)", "sans-serif"],
       },
     },
   },

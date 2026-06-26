@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import {
-  motion,
+  LazyMotion, domAnimation, m,
   useMotionValue, useTransform, useSpring,
   AnimatePresence,
 } from "framer-motion";
@@ -44,7 +44,7 @@ function TiltCard({ children, className, style }) {
     my.set(e.clientY - r.top  - r.height / 2);
   }
   return (
-    <motion.div
+    <m.div
       className={className}
       style={{ rotateX: rx, rotateY: ry, scale: sc, transformStyle: "preserve-3d", ...style }}
       onMouseMove={onMove}
@@ -52,14 +52,14 @@ function TiltCard({ children, className, style }) {
       onMouseLeave={() => { mx.set(0); my.set(0); sc.set(1); }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
 /* ── Section divider line ─────────────────────────────── */
 function Divider() {
   return (
-    <motion.div
+    <m.div
       {...reveal()}
       style={{
         height: 1,
@@ -202,14 +202,14 @@ function Nav() {
               aria-haspopup="true"
             >
               Services
-              <motion.svg
+              <m.svg
                 animate={{ rotate: megaOpen ? 180 : 0 }}
                 transition={{ duration: 0.22 }}
                 width="12" height="12" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"
               >
                 <path d="M6 9l6 6 6-6" />
-              </motion.svg>
+              </m.svg>
             </button>
           </div>
 
@@ -288,7 +288,7 @@ function Nav() {
       {/* ── Mega-menu panel ─────────────────────────────── */}
       <AnimatePresence>
         {megaOpen && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
@@ -403,7 +403,7 @@ function Nav() {
                 </svg>
               </a>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </>
@@ -448,13 +448,20 @@ function Hero() {
     );
   });
 
-  /* Preload 150 frames */
+  /* Preload 150 frames — deferred after initial paint */
   React.useEffect(() => {
-    for (let i = 0; i < 150; i++) {
-      const img = new Image();
-      img.src   = `/frames/ezgif-frame-${String(i + 1).padStart(3, "0")}.jpg`;
-      img.onload = () => { if (i === curFrame.current) paint.current(i); };
-      imgs.current[i] = img;
+    const load = () => {
+      for (let i = 0; i < 150; i++) {
+        const img = new Image();
+        img.src   = `/frames/ezgif-frame-${String(i + 1).padStart(3, "0")}.jpg`;
+        img.onload = () => { if (i === curFrame.current) paint.current(i); };
+        imgs.current[i] = img;
+      }
+    };
+    if ("requestIdleCallback" in window) {
+      window.requestIdleCallback(load, { timeout: 2000 });
+    } else {
+      setTimeout(load, 300);
     }
   }, []);
 
@@ -530,17 +537,17 @@ function Hero() {
           transition: "opacity 0.1s, transform 0.1s",
         }}>
           {/* Eyebrow */}
-          <motion.p
+          <m.p
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: EASE }}
             style={{ color: B.orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", marginBottom: 22 }}
           >
             Rank. Grow. Dominate.
-          </motion.p>
+          </m.p>
 
           {/* H1 */}
-          <motion.h1
+          <m.h1
             initial={{ opacity: 0, y: 36, filter: "blur(8px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 1.1, delay: 0.1, ease: EASE }}
@@ -549,10 +556,10 @@ function Hero() {
             Indonesia's #1<br />
             SEO &amp; GEO<br />
             <em style={{ color: B.orange, fontStyle: "italic", fontWeight: 800 }}>Agency.</em>
-          </motion.h1>
+          </m.h1>
 
           {/* Subtitle */}
-          <motion.p
+          <m.p
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.28, ease: EASE }}
@@ -560,10 +567,10 @@ function Hero() {
           >
             Limadata helps Indonesian businesses rank higher on Google, appear in AI Overviews,
             ChatGPT &amp; Gemini — and turn organic traffic into loyal customers.
-          </motion.p>
+          </m.p>
 
           {/* CTAs */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.42, ease: EASE }}
@@ -607,10 +614,10 @@ function Hero() {
               }}>▶</span>
               View Case Studies
             </a>
-          </motion.div>
+          </m.div>
 
           {/* Social proof */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.58, ease: EASE }}
@@ -639,7 +646,7 @@ function Hero() {
                 Tokopedia, Traveloka, Halodoc &amp; more
               </p>
             </div>
-          </motion.div>
+          </m.div>
         </div>
 
         {/* ── Right stats panel ── */}
@@ -650,7 +657,7 @@ function Hero() {
           zIndex: 2,
         }}>
           {HERO_STATS.map(({ val, label, sub }, i) => (
-            <motion.div
+            <m.div
               key={label}
               initial={{ opacity: 0, x: 24 }}
               animate={{ opacity: 1, x: 0 }}
@@ -667,7 +674,7 @@ function Hero() {
               <p style={{ color: B.white, fontSize: 26, fontWeight: 800, lineHeight: 1, letterSpacing: "-0.02em" }}>{val}</p>
               <p style={{ color: B.dim,   fontSize: 12, marginTop: 5, lineHeight: 1.35 }}>{label}</p>
               <p style={{ color: B.muted, fontSize: 10, marginTop: 2 }}>{sub}</p>
-            </motion.div>
+            </m.div>
           ))}
         </div>
 
@@ -748,7 +755,7 @@ function Services() {
     <section id="services" className="py-28 px-6 md:px-16 lg:px-24 relative" style={{ background: B.surface }}>
       <div aria-hidden="true" style={{ position:"absolute", top:0, left:0, right:0, height:1, background:`linear-gradient(to right,transparent,${B.borderO},transparent)` }} />
 
-      <motion.div {...reveal()} className="text-center mb-16">
+      <m.div {...reveal()} className="text-center mb-16">
         <p className="text-xs uppercase tracking-[0.2em] mb-4 font-semibold" style={{ color: B.orange }}>
           What we do
         </p>
@@ -759,12 +766,12 @@ function Services() {
         <p className="mt-5 text-sm max-w-lg mx-auto leading-relaxed" style={{ color: B.muted }}>
           From search rankings and paid ads to web development and UX design — a complete digital agency built for Indonesian businesses competing globally.
         </p>
-      </motion.div>
+      </m.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 max-w-6xl mx-auto" style={{ perspective: 1200 }}>
         {SERVICE_CATS.map(({ heading, description, icon, items, listOnly }, i) => (
           <TiltCard key={heading}>
-            <motion.div
+            <m.div
               {...reveal(i * 0.08)}
               className="h-full rounded-2xl flex flex-col cursor-default transition-all duration-300"
               style={{ background: B.card, border: `1px solid ${B.border}` }}
@@ -817,7 +824,7 @@ function Services() {
                   </svg>
                 </a>
               </div>
-            </motion.div>
+            </m.div>
           </TiltCard>
         ))}
       </div>
@@ -835,7 +842,7 @@ function CaseStudies({ cases }) {
       <div aria-hidden="true" style={{ position:"absolute", top:0, left:0, right:0, height:1, background:`linear-gradient(to right,transparent,${B.borderO},transparent)` }} />
 
       {/* Heading */}
-      <motion.div
+      <m.div
         {...reveal()}
         className="mb-12 px-6 md:px-16 lg:px-24"
       >
@@ -846,7 +853,7 @@ function CaseStudies({ cases }) {
           How Indonesian businesses{" "}
           <span style={{ color: B.orange }}>grew with Limadata</span>
         </h2>
-      </motion.div>
+      </m.div>
 
       {/* Scrollable track */}
       <div
@@ -929,7 +936,7 @@ function CaseStudies({ cases }) {
             );
 
             return (
-              <motion.div
+              <m.div
                 key={company}
                 {...reveal(i * 0.07)}
                 style={{
@@ -945,7 +952,7 @@ function CaseStudies({ cases }) {
                 transition={{ duration: 0.25 }}
               >
                 {textTop ? <>{TextBlock}{ImageBlock}</> : <>{ImageBlock}{TextBlock}</>}
-              </motion.div>
+              </m.div>
             );
           })}
         </div>
@@ -1216,15 +1223,15 @@ function Articles({ articles: ARTICLES }) {
 
       {/* Header */}
       <div className="flex items-end justify-between mb-14 flex-wrap gap-4">
-        <motion.div {...reveal()}>
+        <m.div {...reveal()}>
           <p className="text-xs uppercase tracking-[0.2em] mb-3 font-semibold" style={{ color: B.orange }}>
             Insights
           </p>
           <h2 className="font-bold leading-tight" style={{ color: B.white, fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
             Latest articles
           </h2>
-        </motion.div>
-        <motion.a
+        </m.div>
+        <m.a
           {...reveal(0.1)}
           href="#"
           className="flex items-center gap-2 text-sm font-semibold transition-opacity hover:opacity-70"
@@ -1234,7 +1241,7 @@ function Articles({ articles: ARTICLES }) {
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M7 17L17 7M7 7h10v10"/>
           </svg>
-        </motion.a>
+        </m.a>
       </div>
 
       {/* Grid */}
@@ -1243,7 +1250,7 @@ function Articles({ articles: ARTICLES }) {
           const c = CAT_COLORS[category] ?? { bg: "rgba(255,255,255,0.08)", text: B.dim };
           return (
             <TiltCard key={title}>
-              <motion.a
+              <m.a
                 {...reveal(i * 0.07)}
                 href={href}
                 style={{ textDecoration: "none", display: "flex", flexDirection: "column", height: "100%" }}
@@ -1299,7 +1306,7 @@ function Articles({ articles: ARTICLES }) {
                     </svg>
                   </div>
                 </div>
-              </motion.a>
+              </m.a>
             </TiltCard>
           );
         })}
@@ -1321,23 +1328,23 @@ function FAQ() {
   const [open, setOpen] = React.useState(null);
   return (
     <section id="faq" className="py-28 px-6 md:px-16 lg:px-24 relative" style={{ background: B.dark }}>
-      <motion.div {...reveal()} className="text-center mb-16">
+      <m.div {...reveal()} className="text-center mb-16">
         <p className="text-xs uppercase tracking-[0.2em] mb-4 font-semibold" style={{ color: B.orange }}>Questions</p>
         <h2 className="font-bold leading-tight" style={{ color: B.white, fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
           Frequently asked about{" "}
           <span style={{ color: B.orange }}>SEO Indonesia</span>
         </h2>
-      </motion.div>
+      </m.div>
 
       <div className="max-w-3xl mx-auto" style={{ borderTop: `1px solid ${B.border}` }}>
         {FAQS.map(({ q, a }, i) => (
-          <motion.div key={i} {...reveal(i * 0.05)} style={{ borderBottom: `1px solid ${B.border}` }}>
+          <m.div key={i} {...reveal(i * 0.05)} style={{ borderBottom: `1px solid ${B.border}` }}>
             <button
               className="w-full flex items-start justify-between gap-4 py-6 text-left"
               onClick={() => setOpen(open === i ? null : i)}
             >
               <span className="text-sm md:text-base font-semibold leading-snug" style={{ color: B.white }}>{q}</span>
-              <motion.span
+              <m.span
                 animate={{ rotate: open === i ? 45 : 0 }}
                 transition={{ duration: 0.22 }}
                 className="shrink-0 mt-0.5"
@@ -1346,11 +1353,11 @@ function FAQ() {
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                   <path d="M12 5v14M5 12h14" />
                 </svg>
-              </motion.span>
+              </m.span>
             </button>
             <AnimatePresence initial={false}>
               {open === i && (
-                <motion.div
+                <m.div
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
@@ -1358,10 +1365,10 @@ function FAQ() {
                   style={{ overflow: "hidden" }}
                 >
                   <p className="text-sm leading-relaxed pb-6" style={{ color: B.muted }}>{a}</p>
-                </motion.div>
+                </m.div>
               )}
             </AnimatePresence>
-          </motion.div>
+          </m.div>
         ))}
       </div>
     </section>
@@ -1386,29 +1393,29 @@ function CTA() {
       }} />
 
       <div className="relative z-10 max-w-2xl mx-auto">
-        <motion.p
+        <m.p
           {...reveal()}
           className="text-xs uppercase tracking-[0.2em] mb-4 font-semibold"
           style={{ color: B.orange }}
         >
           Ready to grow?
-        </motion.p>
-        <motion.h2
+        </m.p>
+        <m.h2
           {...reveal(0.08)}
           className="font-bold leading-tight mb-6"
           style={{ color: B.white, fontSize: "clamp(2.2rem, 6vw, 4rem)" }}
         >
           Get your free SEO &amp; GEO audit
-        </motion.h2>
-        <motion.p
+        </m.h2>
+        <m.p
           {...reveal(0.16)}
           className="text-sm leading-relaxed mb-10 max-w-md mx-auto"
           style={{ color: B.muted }}
         >
           We'll analyse your Google rankings, site health, and AI search presence — then send you a
           prioritised report, free of charge, within 48 hours.
-        </motion.p>
-        <motion.div
+        </m.p>
+        <m.div
           {...reveal(0.24)}
           className="flex items-center justify-center gap-4 flex-wrap"
         >
@@ -1432,7 +1439,7 @@ function CTA() {
           >
             Visit limadata.co.id
           </a>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );
@@ -1719,16 +1726,18 @@ export default function LimadataPage({ articles: rawArticles = [], caseStudies: 
     category, title, excerpt, date, readTime: read_time, href: `/articles/${slug}`,
   }));
   return (
-    <div style={{ background: B.dark, minHeight: "100vh" }}>
-      <Nav />
-      <Hero />
-      <SocialProof />
-      <Services />
-      <CaseStudies cases={CASES} />
-      <Articles articles={ARTICLES} />
-      <FAQ />
-      <CTA />
-      <Footer />
-    </div>
+    <LazyMotion features={domAnimation}>
+      <div style={{ background: B.dark, minHeight: "100vh" }}>
+        <Nav />
+        <Hero />
+        <SocialProof />
+        <Services />
+        <CaseStudies cases={CASES} />
+        <Articles articles={ARTICLES} />
+        <FAQ />
+        <CTA />
+        <Footer />
+      </div>
+    </LazyMotion>
   );
 }

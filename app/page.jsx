@@ -56,6 +56,24 @@ export const metadata = {
 const jsonLd = [
   {
     "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://limadata.co.id/#website",
+    url: "https://limadata.co.id",
+    name: "Limadata",
+    description: "Agency SEO & GEO Indonesia terpercaya",
+    publisher: { "@id": "https://limadata.co.id/#organization" },
+    inLanguage: "id",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: "https://limadata.co.id/articles?q={search_term_string}",
+      },
+      "query-input": "required name=search_term_string",
+    },
+  },
+  {
+    "@context": "https://schema.org",
     "@type": "Organization",
     "@id": "https://limadata.co.id/#organization",
     name: "Limadata",
@@ -169,7 +187,7 @@ const jsonLd = [
     description:
       "Limadata adalah jasa SEO Indonesia terpercaya. Kami membantu bisnis Indonesia raih peringkat #1 di Google, tampil di AI Overview, ChatGPT & Gemini.",
     inLanguage: ["id", "en"],
-    isPartOf: { "@id": "https://limadata.co.id/#organization" },
+    isPartOf: { "@id": "https://limadata.co.id/#website" },
     about: { "@id": "https://limadata.co.id/#business" },
     breadcrumb: {
       "@type": "BreadcrumbList",
