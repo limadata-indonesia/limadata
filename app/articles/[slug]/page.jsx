@@ -1,6 +1,6 @@
-import { getArticle, getAllSlugs } from "../../lib/limadata-articles";
+import { getArticle, getAllSlugs } from "../../../lib/limadata-articles";
 import { notFound } from "next/navigation";
-import ArticlePage from "../../components/LimadataArticlePage";
+import ArticlePage from "../../../components/LimadataArticlePage";
 
 export async function generateStaticParams() {
   return getAllSlugs().map((slug) => ({ slug }));
