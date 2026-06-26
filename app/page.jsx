@@ -202,34 +202,42 @@ const jsonLd = [
     mainEntity: [
       {
         "@type": "Question",
-        name: "Apa itu GEO dan mengapa bisnis Indonesia membutuhkannya?",
+        name: "How is Limadata different from other SEO agencies?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "GEO (Generative Engine Optimization) adalah praktik mengoptimasi konten agar muncul dalam jawaban AI seperti ChatGPT, Google AI Overviews, Gemini, dan Perplexity. Semakin banyak konsumen Indonesia memulai perjalanan pencarian mereka dengan AI tools, sehingga visibilitas di sana semakin penting.",
+          text: "Most agencies over-promise and under-report. At Limadata, every engagement starts with a data audit of your actual Search Console. You get a dedicated strategist, a transparent project board, and measurable KPIs agreed before we start.",
         },
       },
       {
         "@type": "Question",
-        name: "Apa yang membedakan Limadata dari agency SEO Indonesia lainnya?",
+        name: "How do I know SEO will be worth the investment?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Sebagian besar agency SEO Indonesia hanya fokus pada peringkat Google. Limadata mencakup seluruh lanskap pencarian modern — Google, Bing, dan platform AI — menggunakan data nyata dari Google Search Console, analisis kompetitor, dan AI citation tracking. Kami juga spesialis pasar Indonesia termasuk keyword research Bahasa Indonesia dan link-building lokal.",
+          text: "Every strategy is built around clear KPIs, performance tracking, and data-driven decisions from day one. You'll have full visibility into how each channel contributes to growth, supported by transparent monthly reporting.",
         },
       },
       {
         "@type": "Question",
-        name: "Berapa lama SEO membutuhkan waktu untuk menampilkan hasil di Indonesia?",
+        name: "What is GEO and why does my Indonesian business need it?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Untuk perbaikan teknis SEO dan on-page, Anda biasanya melihat peningkatan peringkat dalam 4–8 minggu. Program konten dan link-building membangun momentum selama 3–6 bulan. Klien biasanya mencapai peningkatan traffic organik 2–3× dalam 6 bulan engagement penuh.",
+          text: "GEO (Generative Engine Optimization) is the practice of optimising your content to appear in AI-generated answers from ChatGPT, Google AI Overviews, Gemini, and Perplexity. As more Indonesian consumers start their search journey with AI tools, being cited in those answers drives brand authority and qualified traffic that standard SEO alone cannot reach.",
         },
       },
       {
         "@type": "Question",
-        name: "Apa yang termasuk dalam audit SEO gratis Limadata?",
+        name: "How long does SEO take to show results in Indonesia?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Audit gratis mencakup data Google Search Console Anda, pemeriksaan kesehatan situs, peluang keyword teratas, penilaian kehadiran GEO, dan analisis kesenjangan kompetitor. Anda menerima laporan tertulis dengan rekomendasi prioritas dalam 48 jam.",
+          text: "For technical SEO and on-page fixes, you will typically see measurable ranking improvements within 4-8 weeks. Content and link-building programmes build momentum over 3-6 months. Clients typically achieve a 2-3x organic traffic increase within 6 months of a full engagement.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What does the free Limadata SEO audit include?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "The free audit covers your current Google Search Console data, a site health check, top keyword opportunities, a GEO presence assessment, and a competitor gap analysis. You receive a written report with prioritised recommendations delivered within 48 hours.",
         },
       },
     ],

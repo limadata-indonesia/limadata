@@ -1326,59 +1326,124 @@ function Articles({ articles: ARTICLES }) {
 
 /* ── FAQ ──────────────────────────────────────────────── */
 const FAQS = [
-  { q: "What is GEO and why does my Indonesian business need it?", a: "GEO (Generative Engine Optimization) is the practice of optimising your content to appear in AI-generated answers from tools like ChatGPT, Google AI Overviews, Gemini, and Perplexity. As more Indonesian consumers start their search journey with AI tools, being cited in those answers is increasingly important — especially for considered purchases like software, B2B services, and high-value products." },
-  { q: "How is Limadata different from a standard SEO agency?", a: "Most SEO agencies focus exclusively on Google rankings. Limadata covers the full modern search landscape — Google, Bing, and AI platforms — using data from your actual Search Console, competitor gap analysis, and proprietary AI citation tracking. We also specialise in the Indonesian market, including Bahasa Indonesia keyword research and local link-building." },
-  { q: "How long does SEO take to show results in Indonesia?", a: "For technical SEO and on-page fixes, you'll typically see measurable ranking improvements within 4–8 weeks. Content and link-building programmes build momentum over 3–6 months. Clients typically achieve a 2–3× organic traffic increase within 6 months of a full engagement." },
-  { q: "Do you work with businesses targeting both Indonesian and international audiences?", a: "Yes. We handle bilingual strategies (Bahasa Indonesia + English), hreflang implementation, market-specific keyword research, and separate action plans for each target audience. Many of our clients rank in both the Indonesian and global search results." },
-  { q: "What does the free audit include?", a: "The free audit covers your current Google Search Console data (if you share access), a site health check, top keyword opportunities, a GEO presence assessment (whether your brand appears in AI answers), and a competitor gap analysis. You receive a written report with prioritised recommendations." },
+  {
+    q: "I've worked with agencies before and they didn't deliver. How are you different?",
+    a: "Most agencies over-promise and under-report. At Limadata, every engagement starts with a data audit of your actual Search Console — not vanity metrics. You get a dedicated strategist, a transparent project board, and measurable KPIs agreed before we start. If something isn't working, we tell you and pivot. We don't hide behind 90-day lock-ins.",
+  },
+  {
+    q: "How do I know this will be worth the investment?",
+    a: "Every strategy is built around clear KPIs, performance tracking, and data-driven decisions from day one. We continuously analyse performance across all channels, optimising in real time to improve efficiency and ROI. You'll have full visibility into how each channel contributes to growth — from acquisition to conversion — supported by transparent monthly reporting.",
+  },
+  {
+    q: "What is GEO and why does my Indonesian business need it?",
+    a: "GEO (Generative Engine Optimization) is the practice of optimising your content to appear in AI-generated answers from ChatGPT, Google AI Overviews, Gemini, and Perplexity. As more Indonesian consumers start their search journey with AI tools, being cited in those answers drives brand authority and qualified traffic that standard SEO alone can't reach.",
+  },
+  {
+    q: "How long does SEO take to show results in Indonesia?",
+    a: "For technical SEO and on-page fixes, you'll typically see measurable ranking improvements within 4–8 weeks. Content and link-building programmes build momentum over 3–6 months. Clients typically achieve a 2–3× organic traffic increase within 6 months of a full engagement.",
+  },
+  {
+    q: "What if I don't want to commit to a long-term contract?",
+    a: "We offer a free 48-hour audit with no strings attached. After that, engagements run month-to-month after an initial 3-month onboarding period — long enough to show real results, short enough to keep us accountable. You can scale up, pause, or cancel with 30 days' notice.",
+  },
+  {
+    q: "Do you work with businesses targeting both Indonesian and international audiences?",
+    a: "Yes. We handle bilingual strategies (Bahasa Indonesia + English), hreflang implementation, market-specific keyword research, and separate action plans for each target audience. Many of our clients rank in both Indonesian and global search results simultaneously.",
+  },
+  {
+    q: "What does the free SEO audit include?",
+    a: "The free audit covers your current Google Search Console data, a site health check, top keyword opportunities, a GEO presence assessment (whether your brand appears in AI answers), and a competitor gap analysis. You receive a written report with prioritised recommendations — delivered within 48 hours.",
+  },
 ];
 
 function FAQ() {
   const [open, setOpen] = React.useState(null);
+  const pad = "max(24px, calc((100vw - 1000px) / 2))";
+
   return (
-    <section id="faq" className="py-28 px-6 md:px-16 lg:px-24 relative" style={{ background: B.dark }}>
-      <m.div {...reveal()} className="text-center mb-16">
-        <p className="text-xs uppercase tracking-[0.2em] mb-4 font-semibold" style={{ color: B.orange }}>Questions</p>
-        <h2 className="font-bold leading-tight" style={{ color: B.white, fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
-          Frequently asked about{" "}
-          <span style={{ color: B.orange }}>SEO Indonesia</span>
+    <section id="faq" style={{ background: B.dark, padding: `96px ${pad}`, position: "relative" }}>
+      <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(to right,transparent,${B.borderO},transparent)` }} />
+
+      <m.div {...reveal()} style={{ textAlign: "center", marginBottom: 60 }}>
+        <p style={{ color: B.orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", marginBottom: 16 }}>
+          Questions
+        </p>
+        <h2 style={{ color: B.white, fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 800, letterSpacing: "-0.025em", lineHeight: 1.1 }}>
+          Frequently asked{" "}
+          <span style={{ color: B.orange }}>questions</span>
         </h2>
       </m.div>
 
-      <div className="max-w-3xl mx-auto" style={{ borderTop: `1px solid ${B.border}` }}>
-        {FAQS.map(({ q, a }, i) => (
-          <m.div key={i} {...reveal(i * 0.05)} style={{ borderBottom: `1px solid ${B.border}` }}>
-            <button
-              className="w-full flex items-start justify-between gap-4 py-6 text-left"
-              onClick={() => setOpen(open === i ? null : i)}
-            >
-              <span className="text-sm md:text-base font-semibold leading-snug" style={{ color: B.white }}>{q}</span>
-              <m.span
-                animate={{ rotate: open === i ? 45 : 0 }}
-                transition={{ duration: 0.22 }}
-                className="shrink-0 mt-0.5"
-                style={{ color: B.orange }}
+      <div style={{ display: "flex", flexDirection: "column", gap: 10, maxWidth: 1000, margin: "0 auto" }}>
+        {FAQS.map(({ q, a }, i) => {
+          const isOpen = open === i;
+          return (
+            <m.div key={i} {...reveal(i * 0.04)}>
+              <div
+                role="button"
+                tabIndex={0}
+                onClick={() => setOpen(isOpen ? null : i)}
+                onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpen(isOpen ? null : i)}
+                style={{
+                  borderRadius: 18,
+                  border: `1px solid ${isOpen ? "rgba(200,70,8,0.35)" : "rgba(255,255,255,0.07)"}`,
+                  padding: "28px 32px",
+                  cursor: "pointer",
+                  background: isOpen
+                    ? "radial-gradient(ellipse 70% 100% at 0% 110%, rgba(200,65,8,0.52) 0%, transparent 58%), #130906"
+                    : "radial-gradient(ellipse 70% 100% at 0% 110%, rgba(170,50,5,0.38) 0%, transparent 58%), #0d0705",
+                  transition: "background 0.35s, border-color 0.35s",
+                  outline: "none",
+                }}
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                  <path d="M12 5v14M5 12h14" />
-                </svg>
-              </m.span>
-            </button>
-            <AnimatePresence initial={false}>
-              {open === i && (
-                <m.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.32, ease: EASE }}
-                  style={{ overflow: "hidden" }}
-                >
-                  <p className="text-sm leading-relaxed pb-6" style={{ color: B.muted }}>{a}</p>
-                </m.div>
-              )}
-            </AnimatePresence>
-          </m.div>
-        ))}
+                {/* Question row */}
+                <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 28 }}>
+                  <p style={{
+                    color: B.white,
+                    fontSize: "clamp(13px, 1.5vw, 16px)",
+                    fontWeight: 700,
+                    letterSpacing: "0.07em",
+                    textTransform: "uppercase",
+                    lineHeight: 1.38,
+                    margin: 0,
+                    flex: 1,
+                  }}>
+                    {q}
+                  </p>
+                  {/* +/- icon */}
+                  <div style={{ flexShrink: 0, color: B.orange, marginTop: 2, lineHeight: 0 }}>
+                    {isOpen ? (
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+                        <path d="M5 12h14" />
+                      </svg>
+                    ) : (
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+                        <path d="M12 5v14M5 12h14" />
+                      </svg>
+                    )}
+                  </div>
+                </div>
+
+                {/* Answer */}
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <m.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: EASE }}
+                      style={{ overflow: "hidden" }}
+                    >
+                      <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 13, lineHeight: 1.8, marginTop: 18, marginBottom: 0 }}>
+                        {a}
+                      </p>
+                    </m.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </m.div>
+          );
+        })}
       </div>
     </section>
   );
