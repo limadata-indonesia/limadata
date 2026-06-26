@@ -244,6 +244,45 @@ const jsonLd = [
   },
 ];
 
+const FALLBACK_CASE_STUDIES = [
+  {
+    id: "static-1", company: "Tokopedia", abbr: "TK",
+    description: "Tokopedia's product pages competed against established marketplaces with stronger domain authority. Limadata restructured category architecture, deployed schema markup, and built 240 editorial links — tripling organic revenue in six months.",
+    change: "+340%", service: "SEO Services & Content Strategy",
+    bg: "linear-gradient(135deg,#1d6e36,#0a3018)", dot: "#2dbd5a", sort_order: 1, published: true,
+  },
+  {
+    id: "static-2", company: "Traveloka", abbr: "TV",
+    description: "With Google AI Overviews reshaping how travellers research flights and hotels, Traveloka needed to appear in AI-generated answers. Limadata's GEO strategy lifted citation frequency from 12% to 68% across target queries.",
+    change: "+180%", service: "GEO & AI Visibility",
+    bg: "linear-gradient(135deg,#0068c9,#003060)", dot: "#3da1ff", sort_order: 2, published: true,
+  },
+  {
+    id: "static-3", company: "Kopi Kenangan", abbr: "KK",
+    description: "Kopi Kenangan entered Jakarta's saturated F&B market with zero organic presence. Limadata built a hyperlocal SEO foundation and paired it with precision Google Ads — resulting in a 425% surge in store-visit traffic within nine months.",
+    change: "+425%", service: "SEO & SEM Services",
+    bg: "linear-gradient(135deg,#7a3b10,#3d1c07)", dot: "#d4813a", sort_order: 3, published: true,
+  },
+  {
+    id: "static-4", company: "Halodoc", abbr: "HD",
+    description: "Halodoc's telehealth platform had 3,000+ pages missing health schema and Core Web Vitals issues costing ranking positions. Limadata's technical audit and content refresh pushed 840 health queries to page one in four months.",
+    change: "+215%", service: "Technical SEO & Content",
+    bg: "linear-gradient(135deg,#006e3c,#003a1e)", dot: "#00c46a", sort_order: 4, published: true,
+  },
+  {
+    id: "static-5", company: "GoTo Financial", abbr: "GT",
+    description: "GoTo Financial needed financial content that ranked, educated, and converted Indonesian audiences. Limadata's writing team produced 60 long-form articles per quarter, growing organic lead volume by 290% in under a year.",
+    change: "+290%", service: "Writing Services & SEO",
+    bg: "linear-gradient(135deg,#b04010,#5c200a)", dot: "#E8601A", sort_order: 5, published: true,
+  },
+  {
+    id: "static-6", company: "Bukalapak", abbr: "BL",
+    description: "Bukalapak's Google Ads spend drove high clicks but poor checkout completion. Limadata re-architected campaign structure, rewrote ad copy, and advised on landing page UX — cutting cost-per-acquisition by 44% while doubling conversions.",
+    change: "+167%", service: "SEM & UI/UX Consulting",
+    bg: "linear-gradient(135deg,#005f99,#003058)", dot: "#2a9fd6", sort_order: 6, published: true,
+  },
+];
+
 export default async function Page() {
   let articles = [];
   let caseStudies = [];
@@ -259,6 +298,8 @@ export default async function Page() {
       caseStudies = c ?? [];
     } catch (_) {}
   }
+
+  if (caseStudies.length === 0) caseStudies = FALLBACK_CASE_STUDIES;
 
   return (
     <>
