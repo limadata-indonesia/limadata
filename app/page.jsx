@@ -1,4 +1,5 @@
 import LimadataPage from "../components/LimadataPage";
+import { createClient } from "../lib/supabase-server";
 
 export const metadata = {
   title: "Jasa SEO Indonesia Terpercaya | Limadata — Agency SEO & GEO",
@@ -217,7 +218,13 @@ const jsonLd = [
   },
 ];
 
-export default function Page() {
+export default async function Page() {
+  const supabase = createClient();
+  const [{ data: articles }, { data: caseStudies }] = await Promise.all([
+    supabase.from("articles").select("*").eq("published", true).order("created_at", { ascending: false }),
+    supabase.from("case_studies").select("*").eq("published", true).order("sort_order", { ascending: true }),
+  ]);
+
   return (
     <>
       {jsonLd.map((schema, i) => (
@@ -227,7 +234,7 @@ export default function Page() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       ))}
-      <LimadataPage />
+      <LimadataPage articles={articles ?? []} caseStudies={caseStudies ?? []} />
     </>
   );
 }

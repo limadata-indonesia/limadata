@@ -5,7 +5,6 @@ import {
   useMotionValue, useTransform, useSpring,
   AnimatePresence,
 } from "framer-motion";
-import { ARTICLES as ARTICLE_DATA } from "../lib/limadata-articles";
 
 /* ── Brand tokens ─────────────────────────────────────── */
 const B = {
@@ -827,65 +826,10 @@ function Services() {
 }
 
 /* ── How it works ─────────────────────────────────────── */
-/* ── Case Studies ─────────────────────────────────────── */
-const CASES = [
-  {
-    company:     "Tokopedia",
-    abbr:        "TK",
-    description: "Indonesia's largest marketplace needed to dominate search across millions of product categories. Limadata rebuilt their keyword architecture from the ground up.",
-    change:      "340%",
-    service:     "SEO Services & Content Strategy",
-    bg:          "linear-gradient(135deg,#1d6e36 0%,#0d3a1c 100%)",
-    dot:         "#2dbd5a",
-  },
-  {
-    company:     "Traveloka",
-    abbr:        "TV",
-    description: "Southeast Asia's leading travel platform sought to capture AI Overview visibility for hotel and flight queries across six markets simultaneously.",
-    change:      "180%",
-    service:     "GEO & AI Visibility",
-    bg:          "linear-gradient(135deg,#0068c9 0%,#003d7a 100%)",
-    dot:         "#3da1ff",
-  },
-  {
-    company:     "Kopi Kenangan",
-    abbr:        "KK",
-    description: "Indonesia's fastest-growing coffee chain needed local SEO to drive foot traffic and app downloads across 800+ outlets nationwide.",
-    change:      "425%",
-    service:     "Local SEO & Link Building",
-    bg:          "linear-gradient(135deg,#7a3b10 0%,#3d1c07 100%)",
-    dot:         "#d4813a",
-  },
-  {
-    company:     "Halodoc",
-    abbr:        "HD",
-    description: "Indonesia's top health-tech platform wanted to own medical search in Bahasa Indonesia and compete against established international health portals.",
-    change:      "290%",
-    service:     "SEO Services & Schema Markup",
-    bg:          "linear-gradient(135deg,#006e3c 0%,#003a1e 100%)",
-    dot:         "#00c46a",
-  },
-  {
-    company:     "Tiket.com",
-    abbr:        "TC",
-    description: "A leading OTA targeting domestic travel segments needed aggressive keyword growth to recover and surpass pre-pandemic organic traffic levels.",
-    change:      "520%",
-    service:     "On-Page SEO & GEO",
-    bg:          "linear-gradient(135deg,#b04010 0%,#5c200a 100%)",
-    dot:         "#E8601A",
-  },
-  {
-    company:     "Blibli",
-    abbr:        "BL",
-    description: "PT Global Digital Niaga's e-commerce platform needed to rank for high-intent shopping queries against deeply entrenched category competitors.",
-    change:      "215%",
-    service:     "Technical SEO & Link Building",
-    bg:          "linear-gradient(135deg,#005f99 0%,#003058 100%)",
-    dot:         "#2a9fd6",
-  },
-];
+/* ── Case Studies (injected as props from server) ─────── */
 
-function CaseStudies() {
+function CaseStudies({ cases }) {
+  const CASES = cases;
   return (
     <section id="case-studies" className="py-24 relative overflow-hidden" style={{ background: B.dark }}>
       <div aria-hidden="true" style={{ position:"absolute", top:0, left:0, right:0, height:1, background:`linear-gradient(to right,transparent,${B.borderO},transparent)` }} />
@@ -1255,11 +1199,7 @@ function SocialProof() {
   );
 }
 
-/* ── Articles ─────────────────────────────────────────── */
-const ARTICLES = ARTICLE_DATA.map(({ slug, category, title, excerpt, date, readTime }) => ({
-  category, title, excerpt, date, readTime,
-  href: `/articles/${slug}`,
-}));
+/* ── Articles (injected as props from server) ─────────── */
 
 const CAT_COLORS = {
   "GEO":              { bg: "rgba(232,96,26,0.12)",  text: B.orange },
@@ -1269,7 +1209,7 @@ const CAT_COLORS = {
   "Digital Marketing":{ bg: "rgba(220,180,40,0.12)",  text: "#d4b430" },
 };
 
-function Articles() {
+function Articles({ articles: ARTICLES }) {
   return (
     <section id="articles" className="py-28 px-6 md:px-16 lg:px-24 relative" style={{ background: B.surface }}>
       <div aria-hidden="true" style={{ position:"absolute", top:0, left:0, right:0, height:1, background:`linear-gradient(to right,transparent,${B.borderO},transparent)` }} />
@@ -1774,15 +1714,18 @@ function Footer() {
 }
 
 /* ── Page ─────────────────────────────────────────────── */
-export default function LimadataPage() {
+export default function LimadataPage({ articles: rawArticles = [], caseStudies: CASES = [] }) {
+  const ARTICLES = rawArticles.map(({ slug, category, title, excerpt, date, read_time }) => ({
+    category, title, excerpt, date, readTime: read_time, href: `/articles/${slug}`,
+  }));
   return (
     <div style={{ background: B.dark, minHeight: "100vh" }}>
       <Nav />
       <Hero />
       <SocialProof />
       <Services />
-      <CaseStudies />
-      <Articles />
+      <CaseStudies cases={CASES} />
+      <Articles articles={ARTICLES} />
       <FAQ />
       <CTA />
       <Footer />
