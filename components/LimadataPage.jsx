@@ -1111,7 +1111,7 @@ function ScrollFrameAnimation() {
           paddingBottom: "10vh", textAlign: "center",
         }}>
           <p id="sfx-text" style={{
-            color: B.white, fontSize: "clamp(1.5rem, 3.5vw, 2.8rem)",
+            color: B.white, fontSize: "clamp(1.5rem, 2.8vw, 2.2rem)",
             fontWeight: 800, letterSpacing: "-0.02em", lineHeight: 1.2,
             opacity: 0, margin: 0,
             textShadow: "0 2px 40px rgba(0,0,0,0.9)",
