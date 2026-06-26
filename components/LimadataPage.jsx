@@ -425,54 +425,11 @@ const HERO_AVATARS = [
 ];
 
 function Hero() {
-  const wrapRef   = React.useRef(null);
-  const canvasRef = React.useRef(null);
-  const imgs      = React.useRef([]);
-  const curFrame  = React.useRef(0);
-  const rafId     = React.useRef(0);
+  const wrapRef  = React.useRef(null);
+  const videoRef = React.useRef(null);
+  const rafId    = React.useRef(0);
 
-  /* Paint a frame onto the canvas */
-  const paint = React.useRef((n) => {
-    const canvas = canvasRef.current;
-    const img    = imgs.current[n];
-    if (!canvas || !img || !img.complete || !img.naturalWidth) return;
-    const W = canvas.offsetWidth  || window.innerWidth;
-    const H = canvas.offsetHeight || window.innerHeight;
-    if (canvas.width !== W || canvas.height !== H) { canvas.width = W; canvas.height = H; }
-    const ctx   = canvas.getContext("2d");
-    const scale = Math.max(W / img.naturalWidth, H / img.naturalHeight);
-    ctx.drawImage(img,
-      (W - img.naturalWidth  * scale) / 2,
-      (H - img.naturalHeight * scale) / 2,
-      img.naturalWidth * scale, img.naturalHeight * scale
-    );
-  });
-
-  /* Load frames: first 12 immediately (canvas visible on load), rest deferred */
-  React.useEffect(() => {
-    const TOTAL = 120;
-    const EAGER = 12;
-
-    function loadRange(start, end) {
-      for (let i = start; i < end; i++) {
-        const img = new Image();
-        img.src = `/frames/ezgif-frame-${String(i + 1).padStart(3, "0")}.jpg`;
-        img.onload = () => { if (i === curFrame.current) paint.current(i); };
-        imgs.current[i] = img;
-      }
-    }
-
-    loadRange(0, EAGER);
-
-    const deferred = () => loadRange(EAGER, TOTAL);
-    if ("requestIdleCallback" in window) {
-      window.requestIdleCallback(deferred, { timeout: 3000 });
-    } else {
-      setTimeout(deferred, 400);
-    }
-  }, []);
-
-  /* Scroll → frame + hero fade */
+  /* Scroll → video scrub + hero fade */
   React.useEffect(() => {
     const HERO_FADE_START = 0.72;
     const HERO_FADE_END   = 0.88;
@@ -484,11 +441,12 @@ function Hero() {
       const scrollable = height - window.innerHeight;
       if (scrollable <= 0) return;
       const t = Math.max(0, Math.min(1, -top / scrollable));
-      const n = Math.min(119, Math.floor(t * 120));
-      curFrame.current = n;
-      paint.current(n);
 
-      // Hero content fades out near the end of the scroll container
+      const video = videoRef.current;
+      if (video && video.readyState >= 1 && video.duration) {
+        video.currentTime = t * video.duration;
+      }
+
       const heroEl = document.getElementById("hero-content");
       if (heroEl) {
         const op = t < HERO_FADE_START ? 1
@@ -511,11 +469,33 @@ function Hero() {
   const pad = "max(24px, calc((100vw - 1152px) / 2))";
 
   return (
-    <div ref={wrapRef} id="results" style={{ height: "400vh", position: "relative", background: B.dark }}>
+    <div ref={wrapRef} id="results" style={{ height: "250vh", position: "relative", background: B.dark }}>
+      <style>{`
+        @media (max-width: 767px) {
+          #hero-content {
+            width: calc(100% - 48px) !important;
+            left: 24px !important;
+            right: 24px !important;
+            padding-top: 96px !important;
+          }
+          #hero-stats-right { display: none !important; }
+          #hero-stats-mobile { display: flex !important; }
+        }
+        @media (min-width: 768px) {
+          #hero-stats-mobile { display: none !important; }
+        }
+      `}</style>
       <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
 
-        {/* ── Frame animation canvas ── */}
-        <canvas ref={canvasRef} style={{ width: "100%", height: "100%", display: "block" }} />
+        {/* ── Video scrub ── */}
+        <video
+          ref={videoRef}
+          src="/Orange_light.mp4"
+          muted
+          playsInline
+          preload="auto"
+          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+        />
 
         {/* ── Gradient overlays ── */}
         {/* Left dark panel for text legibility */}
@@ -537,7 +517,7 @@ function Hero() {
         <div id="hero-content" style={{
           position: "absolute", top: 0, bottom: 0,
           left: pad,
-          width: "min(500px, 44vw)",
+          width: "min(500px, 46vw)",
           display: "flex", flexDirection: "column", justifyContent: "center",
           paddingTop: 80,
           zIndex: 2,
@@ -654,10 +634,29 @@ function Hero() {
               </p>
             </div>
           </m.div>
+
+          {/* Mobile-only stats row */}
+          <div id="hero-stats-mobile" style={{ display: "none", gap: 8, marginTop: 20 }}>
+            {HERO_STATS.map(({ val, label, sub }) => (
+              <div key={label} style={{
+                flex: 1,
+                background: "rgba(10,10,10,0.75)",
+                backdropFilter: "blur(14px)",
+                border: `1px solid ${B.border}`,
+                borderRadius: 10,
+                padding: "10px 10px",
+                textAlign: "center",
+              }}>
+                <p style={{ color: B.white, fontSize: 18, fontWeight: 800, lineHeight: 1 }}>{val}</p>
+                <p style={{ color: B.dim, fontSize: 9, marginTop: 3, lineHeight: 1.3 }}>{label}</p>
+                <p style={{ color: B.muted, fontSize: 8, marginTop: 1 }}>{sub}</p>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* ── Right stats panel ── */}
-        <div style={{
+        {/* ── Right stats panel (desktop only) ── */}
+        <div id="hero-stats-right" style={{
           position: "absolute", right: pad,
           top: "50%", transform: "translateY(-50%)",
           display: "flex", flexDirection: "column", gap: 14,
