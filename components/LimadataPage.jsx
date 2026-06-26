@@ -769,7 +769,7 @@ function Services() {
         <p className="text-xs uppercase tracking-[0.2em] mb-4 font-semibold" style={{ color: B.orange }}>
           What we do
         </p>
-        <h2 className="font-bold leading-tight" style={{ color: B.white, fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
+        <h2 className="font-bold leading-tight" style={{ color: B.white, fontSize: "clamp(1.6rem, 2.8vw, 2.2rem)" }}>
           SEO &amp; Digital Services{" "}
           <span style={{ color: B.muted }}>for Indonesia</span>
         </h2>
@@ -1242,7 +1242,7 @@ function Articles({ articles: ARTICLES }) {
           <p className="text-xs uppercase tracking-[0.2em] mb-3 font-semibold" style={{ color: B.orange }}>
             Insights
           </p>
-          <h2 className="font-bold leading-tight" style={{ color: B.white, fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
+          <h2 className="font-bold leading-tight" style={{ color: B.white, fontSize: "clamp(1.6rem, 2.8vw, 2.2rem)" }}>
             Latest articles
           </h2>
         </m.div>
@@ -1345,7 +1345,7 @@ function FAQ() {
     <section id="faq" className="py-28 px-6 md:px-16 lg:px-24 relative" style={{ background: B.dark }}>
       <m.div {...reveal()} className="text-center mb-16">
         <p className="text-xs uppercase tracking-[0.2em] mb-4 font-semibold" style={{ color: B.orange }}>Questions</p>
-        <h2 className="font-bold leading-tight" style={{ color: B.white, fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
+        <h2 className="font-bold leading-tight" style={{ color: B.white, fontSize: "clamp(1.6rem, 2.8vw, 2.2rem)" }}>
           Frequently asked about{" "}
           <span style={{ color: B.orange }}>SEO Indonesia</span>
         </h2>
@@ -1418,7 +1418,7 @@ function CTA() {
         <m.h2
           {...reveal(0.08)}
           className="font-bold leading-tight mb-6"
-          style={{ color: B.white, fontSize: "clamp(2.2rem, 6vw, 4rem)" }}
+          style={{ color: B.white, fontSize: "clamp(1.6rem, 2.8vw, 2.2rem)" }}
         >
           Get your free SEO &amp; GEO audit
         </m.h2>
