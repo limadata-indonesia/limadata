@@ -448,20 +448,27 @@ function Hero() {
     );
   });
 
-  /* Preload 150 frames — deferred after initial paint */
+  /* Load frames: first 12 immediately (canvas visible on load), rest deferred */
   React.useEffect(() => {
-    const load = () => {
-      for (let i = 0; i < 150; i++) {
+    const TOTAL = 120;
+    const EAGER = 12;
+
+    function loadRange(start, end) {
+      for (let i = start; i < end; i++) {
         const img = new Image();
-        img.src   = `/frames/ezgif-frame-${String(i + 1).padStart(3, "0")}.jpg`;
+        img.src = `/frames/ezgif-frame-${String(i + 1).padStart(3, "0")}.jpg`;
         img.onload = () => { if (i === curFrame.current) paint.current(i); };
         imgs.current[i] = img;
       }
-    };
+    }
+
+    loadRange(0, EAGER);
+
+    const deferred = () => loadRange(EAGER, TOTAL);
     if ("requestIdleCallback" in window) {
-      window.requestIdleCallback(load, { timeout: 2000 });
+      window.requestIdleCallback(deferred, { timeout: 3000 });
     } else {
-      setTimeout(load, 300);
+      setTimeout(deferred, 400);
     }
   }, []);
 
@@ -477,7 +484,7 @@ function Hero() {
       const scrollable = height - window.innerHeight;
       if (scrollable <= 0) return;
       const t = Math.max(0, Math.min(1, -top / scrollable));
-      const n = Math.min(149, Math.floor(t * 150));
+      const n = Math.min(119, Math.floor(t * 120));
       curFrame.current = n;
       paint.current(n);
 
@@ -981,7 +988,7 @@ function CaseStudies({ cases }) {
 function ScrollFrameAnimation() {
   const wrapRef   = React.useRef(null);
   const canvasRef = React.useRef(null);
-  const imgs      = React.useRef([]);        // Image[] — 150 frames
+  const imgs      = React.useRef([]);        // Image[] — 120 frames
   const curFrame  = React.useRef(0);         // current visible frame index
   const rafId     = React.useRef(0);
 
@@ -1007,12 +1014,11 @@ function ScrollFrameAnimation() {
     ctx.drawImage(img, dx, dy, img.naturalWidth * scale, img.naturalHeight * scale);
   });
 
-  // ── Preload all 150 frames ────────────────────────────
+  // ── Preload all 120 frames ────────────────────────────
   React.useEffect(() => {
-    for (let i = 0; i < 150; i++) {
+    for (let i = 0; i < 120; i++) {
       const img = new Image();
       img.src   = `/frames/ezgif-frame-${String(i + 1).padStart(3, "0")}.jpg`;
-      // When any frame loads, repaint if it matches the current visible frame
       img.onload = () => {
         if (i === curFrame.current) paint.current(i);
       };
@@ -1031,7 +1037,7 @@ function ScrollFrameAnimation() {
       if (scrollable <= 0) return;
 
       const t = Math.max(0, Math.min(1, -top / scrollable));
-      const n = Math.min(149, Math.floor(t * 150));
+      const n = Math.min(119, Math.floor(t * 120));
 
       curFrame.current = n;
       paint.current(n);
