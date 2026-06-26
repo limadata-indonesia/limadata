@@ -2,30 +2,38 @@ import { createClient } from "../../../lib/supabase-server";
 import { notFound } from "next/navigation";
 import ArticlePage from "../../../components/LimadataArticlePage";
 
-export async function generateMetadata({ params }) {
-  const supabase = createClient();
-  const { data: article } = await supabase
-    .from("articles")
-    .select("title, excerpt, date, slug")
-    .eq("slug", params.slug)
-    .eq("published", true)
-    .single();
+const hasSupabase = () =>
+  !!(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
 
-  if (!article) return {};
-  return {
-    title: `${article.title} | Limadata`,
-    description: article.excerpt,
-    alternates: { canonical: `https://limadata.co.id/articles/${params.slug}` },
-    openGraph: {
-      title: article.title, description: article.excerpt,
-      url: `https://limadata.co.id/articles/${params.slug}`,
-      siteName: "Limadata", locale: "id_ID", type: "article",
-    },
-    twitter: { card: "summary_large_image", title: article.title, description: article.excerpt },
-  };
+export async function generateMetadata({ params }) {
+  if (!hasSupabase()) return {};
+  try {
+    const supabase = createClient();
+    const { data: article } = await supabase
+      .from("articles")
+      .select("title, excerpt, date, slug")
+      .eq("slug", params.slug)
+      .eq("published", true)
+      .single();
+
+    if (!article) return {};
+    return {
+      title: `${article.title} | Limadata`,
+      description: article.excerpt,
+      alternates: { canonical: `https://limadata.co.id/articles/${params.slug}` },
+      openGraph: {
+        title: article.title, description: article.excerpt,
+        url: `https://limadata.co.id/articles/${params.slug}`,
+        siteName: "Limadata", locale: "id_ID", type: "article",
+      },
+      twitter: { card: "summary_large_image", title: article.title, description: article.excerpt },
+    };
+  } catch (_) { return {}; }
 }
 
 export default async function Page({ params }) {
+  if (!hasSupabase()) notFound();
+
   const supabase = createClient();
   const { data: article } = await supabase
     .from("articles")

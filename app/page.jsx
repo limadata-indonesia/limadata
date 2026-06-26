@@ -237,11 +237,20 @@ const jsonLd = [
 ];
 
 export default async function Page() {
-  const supabase = createClient();
-  const [{ data: articles }, { data: caseStudies }] = await Promise.all([
-    supabase.from("articles").select("*").eq("published", true).order("created_at", { ascending: false }),
-    supabase.from("case_studies").select("*").eq("published", true).order("sort_order", { ascending: true }),
-  ]);
+  let articles = [];
+  let caseStudies = [];
+
+  if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    try {
+      const supabase = createClient();
+      const [{ data: a }, { data: c }] = await Promise.all([
+        supabase.from("articles").select("*").eq("published", true).order("created_at", { ascending: false }),
+        supabase.from("case_studies").select("*").eq("published", true).order("sort_order", { ascending: true }),
+      ]);
+      articles = a ?? [];
+      caseStudies = c ?? [];
+    } catch (_) {}
+  }
 
   return (
     <>
@@ -252,7 +261,7 @@ export default async function Page() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       ))}
-      <LimadataPage articles={articles ?? []} caseStudies={caseStudies ?? []} />
+      <LimadataPage articles={articles} caseStudies={caseStudies} />
     </>
   );
 }
