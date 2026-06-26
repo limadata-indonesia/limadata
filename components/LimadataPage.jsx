@@ -425,11 +425,49 @@ const HERO_AVATARS = [
 ];
 
 function Hero() {
-  const wrapRef  = React.useRef(null);
-  const videoRef = React.useRef(null);
-  const rafId    = React.useRef(0);
+  const wrapRef   = React.useRef(null);
+  const canvasRef = React.useRef(null);
+  const imgs      = React.useRef([]);
+  const curFrame  = React.useRef(0);
+  const rafId     = React.useRef(0);
 
-  /* Scroll → video scrub + hero fade */
+  const paint = React.useRef((n) => {
+    const canvas = canvasRef.current;
+    const img    = imgs.current[n];
+    if (!canvas || !img || !img.complete || !img.naturalWidth) return;
+    const W = canvas.offsetWidth  || window.innerWidth;
+    const H = canvas.offsetHeight || window.innerHeight;
+    if (canvas.width !== W || canvas.height !== H) { canvas.width = W; canvas.height = H; }
+    const ctx   = canvas.getContext("2d");
+    const scale = Math.max(W / img.naturalWidth, H / img.naturalHeight);
+    ctx.drawImage(img,
+      (W - img.naturalWidth  * scale) / 2,
+      (H - img.naturalHeight * scale) / 2,
+      img.naturalWidth * scale, img.naturalHeight * scale
+    );
+  });
+
+  React.useEffect(() => {
+    const TOTAL = 120;
+    const EAGER = 12;
+    function loadRange(start, end) {
+      for (let i = start; i < end; i++) {
+        const img = new Image();
+        img.src = `/frames/ezgif-frame-${String(i + 1).padStart(3, "0")}.jpg`;
+        img.onload = () => { if (i === curFrame.current) paint.current(i); };
+        imgs.current[i] = img;
+      }
+    }
+    loadRange(0, EAGER);
+    const deferred = () => loadRange(EAGER, TOTAL);
+    if ("requestIdleCallback" in window) {
+      window.requestIdleCallback(deferred, { timeout: 3000 });
+    } else {
+      setTimeout(deferred, 400);
+    }
+  }, []);
+
+  /* Scroll → frame + hero fade */
   React.useEffect(() => {
     const HERO_FADE_START = 0.72;
     const HERO_FADE_END   = 0.88;
@@ -441,11 +479,9 @@ function Hero() {
       const scrollable = height - window.innerHeight;
       if (scrollable <= 0) return;
       const t = Math.max(0, Math.min(1, -top / scrollable));
-
-      const video = videoRef.current;
-      if (video && video.readyState >= 1 && video.duration) {
-        video.currentTime = t * video.duration;
-      }
+      const n = Math.min(119, Math.floor(t * 120));
+      curFrame.current = n;
+      paint.current(n);
 
       const heroEl = document.getElementById("hero-content");
       if (heroEl) {
@@ -469,7 +505,7 @@ function Hero() {
   const pad = "max(24px, calc((100vw - 1152px) / 2))";
 
   return (
-    <div ref={wrapRef} id="results" style={{ height: "250vh", position: "relative", background: B.dark }}>
+    <div ref={wrapRef} id="results" style={{ height: "200vh", position: "relative", background: B.dark }}>
       <style>{`
         @media (max-width: 767px) {
           #hero-content {
@@ -487,15 +523,8 @@ function Hero() {
       `}</style>
       <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
 
-        {/* ── Video scrub ── */}
-        <video
-          ref={videoRef}
-          src="/Orange_light.mp4"
-          muted
-          playsInline
-          preload="auto"
-          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-        />
+        {/* ── Frame animation canvas ── */}
+        <canvas ref={canvasRef} style={{ width: "100%", height: "100%", display: "block" }} />
 
         {/* ── Gradient overlays ── */}
         {/* Left dark panel for text legibility */}
