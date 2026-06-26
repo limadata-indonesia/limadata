@@ -865,7 +865,7 @@ function CaseStudies({ cases }) {
         <p className="text-xs uppercase tracking-[0.2em] mb-3 font-semibold" style={{ color: B.orange }}>
           Case Studies
         </p>
-        <h2 className="font-bold leading-tight" style={{ color: B.white, fontSize: "clamp(1.8rem, 4vw, 3rem)" }}>
+        <h2 className="font-bold leading-tight" style={{ color: B.white, fontSize: "clamp(1.5rem, 2.8vw, 2.2rem)" }}>
           How Indonesian businesses{" "}
           <span style={{ color: B.orange }}>grew with Limadata</span>
         </h2>
