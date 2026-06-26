@@ -90,17 +90,17 @@ const MEGA = [
       {
         title: "SEO Services",
         body:  "Make websites rank #1 organically on Google and get cited in the AI Overview.",
-        href:  "#services",
+        href:  "/services/seo",
       },
       {
         title: "Writing Services",
         body:  "Write SEO-friendly articles and copywriting to improve search visibility.",
-        href:  "#services",
+        href:  "/services/writing",
       },
       {
         title: "SEM Service",
         body:  "Run targeted ads on Google to optimise your campaigns and get leads.",
-        href:  "#services",
+        href:  "/services/sem",
       },
     ],
     seeAll: "#services",
@@ -111,17 +111,17 @@ const MEGA = [
       {
         title: "Website Development Services",
         body:  "Build fast, safe, and scalable websites to welcome your customers.",
-        href:  "#services",
+        href:  "/services/web-development",
       },
       {
         title: "App Development Services",
         body:  "Launch a digital app that supports business conversions.",
-        href:  "#services",
+        href:  "/services/app-development",
       },
       {
         title: "UI/UX Design Services",
         body:  "Design app/website with better styles for a more satisfying experience.",
-        href:  "#services",
+        href:  "/services/ui-ux-design",
       },
     ],
     seeAll: "#services",
@@ -709,14 +709,15 @@ const SERVICE_CATS = [
       </svg>
     ),
     items: [
-      { name: "SEO Services" },
-      { name: "Writing Services" },
-      { name: "SEM Service" },
-      { name: "Website Development" },
-      { name: "App Development" },
-      { name: "UI/UX Design" },
+      { name: "SEO Services",        href: "/services/seo"             },
+      { name: "Writing Services",    href: "/services/writing"         },
+      { name: "SEM Service",         href: "/services/sem"             },
+      { name: "Website Development", href: "/services/web-development" },
+      { name: "App Development",     href: "/services/app-development" },
+      { name: "UI/UX Design",        href: "/services/ui-ux-design"    },
     ],
     listOnly: true,
+    cta: "#cta",
   },
   {
     heading: "Digital Marketing",
@@ -727,11 +728,12 @@ const SERVICE_CATS = [
       </svg>
     ),
     items: [
-      { name: "SEO Services",     desc: "Make websites rank #1 organically on Google and get cited in the AI Overview." },
-      { name: "Writing Services", desc: "Write SEO-friendly articles and copywriting to improve search visibility." },
-      { name: "SEM Service",      desc: "Run targeted ads on Google to optimise your campaigns and get leads." },
+      { name: "SEO Services",     desc: "Make websites rank #1 organically on Google and get cited in the AI Overview.", href: "/services/seo"     },
+      { name: "Writing Services", desc: "Write SEO-friendly articles and copywriting to improve search visibility.",      href: "/services/writing" },
+      { name: "SEM Service",      desc: "Run targeted ads on Google to optimise your campaigns and get leads.",           href: "/services/sem"     },
     ],
     listOnly: false,
+    cta: "/services/seo",
   },
   {
     heading: "Web & App Development",
@@ -742,11 +744,12 @@ const SERVICE_CATS = [
       </svg>
     ),
     items: [
-      { name: "Website Development Services", desc: "Build fast, safe, and scalable websites to welcome your customers." },
-      { name: "App Development Services",     desc: "Launch a digital app that supports business conversions." },
-      { name: "UI/UX Design Services",        desc: "Design app/website with better styles for a more satisfying experience." },
+      { name: "Website Development Services", desc: "Build fast, safe, and scalable websites to welcome your customers.",         href: "/services/web-development" },
+      { name: "App Development Services",     desc: "Launch a digital app that supports business conversions.",                   href: "/services/app-development" },
+      { name: "UI/UX Design Services",        desc: "Design app/website with better styles for a more satisfying experience.",    href: "/services/ui-ux-design"    },
     ],
     listOnly: false,
+    cta: "/services/web-development",
   },
 ];
 
@@ -769,7 +772,7 @@ function Services() {
       </m.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 max-w-6xl mx-auto" style={{ perspective: 1200 }}>
-        {SERVICE_CATS.map(({ heading, description, icon, items, listOnly }, i) => (
+        {SERVICE_CATS.map(({ heading, description, icon, items, listOnly, cta }, i) => (
           <TiltCard key={heading}>
             <m.div
               {...reveal(i * 0.08)}
@@ -793,32 +796,38 @@ function Services() {
               {/* Service list */}
               <div style={{ padding: "20px 28px 28px", display: "flex", flexDirection: "column", gap: listOnly ? 10 : 18, flex: 1 }}>
                 {listOnly
-                  ? items.map(({ name }) => (
-                      <div key={name} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  ? items.map(({ name, href }) => (
+                      <a key={name} href={href} style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}
+                        onMouseEnter={e => e.currentTarget.querySelector("span").style.color = B.orange}
+                        onMouseLeave={e => e.currentTarget.querySelector("span").style.color = B.white}
+                      >
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={B.orange} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                           <path d="M5 12h14M12 5l7 7-7 7"/>
                         </svg>
-                        <span style={{ color: B.white, fontSize: 13, fontWeight: 500 }}>{name}</span>
-                      </div>
+                        <span style={{ color: B.white, fontSize: 13, fontWeight: 500, transition: "color 0.18s" }}>{name}</span>
+                      </a>
                     ))
-                  : items.map(({ name, desc }) => (
-                      <div key={name}>
-                        <p style={{ color: B.white, fontSize: 14, fontWeight: 700, marginBottom: 4 }}>{name}</p>
+                  : items.map(({ name, desc, href }) => (
+                      <a key={name} href={href} style={{ textDecoration: "none" }}
+                        onMouseEnter={e => e.currentTarget.querySelector("p").style.color = B.orange}
+                        onMouseLeave={e => e.currentTarget.querySelector("p").style.color = B.white}
+                      >
+                        <p style={{ color: B.white, fontSize: 14, fontWeight: 700, marginBottom: 4, transition: "color 0.18s" }}>{name}</p>
                         <p style={{ color: B.muted, fontSize: 12, lineHeight: 1.6 }}>{desc}</p>
-                      </div>
+                      </a>
                     ))
                 }
               </div>
 
-              {/* See all footer */}
+              {/* Card footer */}
               <div style={{ padding: "0 28px 24px" }}>
                 <a
-                  href="#cta"
+                  href={cta}
                   style={{ display: "inline-flex", alignItems: "center", gap: 5, color: B.orange, fontSize: 13, fontWeight: 600, textDecoration: "none" }}
                   onMouseEnter={e => e.currentTarget.style.opacity = "0.7"}
                   onMouseLeave={e => e.currentTarget.style.opacity = "1"}
                 >
-                  Get started
+                  {listOnly ? "Get started" : "Learn more"}
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M7 17L17 7M7 7h10v10"/>
                   </svg>
@@ -1447,12 +1456,12 @@ function CTA() {
 
 /* ── Footer ───────────────────────────────────────────── */
 const FOOTER_SERVICES = [
-  { label: "SEO Services",              href: "#services" },
-  { label: "Writing Services",          href: "#services" },
-  { label: "SEM Service",               href: "#services" },
-  { label: "Website Development",       href: "#services" },
-  { label: "App Development",           href: "#services" },
-  { label: "UI/UX Design",              href: "#services" },
+  { label: "SEO Services",        href: "/services/seo"              },
+  { label: "Writing Services",    href: "/services/writing"          },
+  { label: "SEM Service",         href: "/services/sem"              },
+  { label: "Website Development", href: "/services/web-development"  },
+  { label: "App Development",     href: "/services/app-development"  },
+  { label: "UI/UX Design",        href: "/services/ui-ux-design"     },
 ];
 
 const FOOTER_COMPANY = [
