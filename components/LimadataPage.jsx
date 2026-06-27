@@ -1611,7 +1611,6 @@ const FOOTER_COMPANY = [
   { label: "About",          href: "/about"          },
   { label: "FAQ",            href: "#faq"            },
   { label: "Free Audit",     href: "#cta"            },
-  { label: "limadata.co.id", href: "https://limadata.co.id", external: true },
 ];
 
 const SOCIALS = [
