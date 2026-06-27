@@ -642,10 +642,10 @@ function Hero() {
           width: "100%",
           maxWidth: 1200,
           margin: "0 auto",
-          padding: "80px max(24px, calc((100vw - 1200px) / 2))",
+          padding: "80px 48px",
           display: "flex",
           alignItems: "center",
-          gap: 96,
+          gap: 80,
         }}
       >
         {/* ── Left copy ── */}
