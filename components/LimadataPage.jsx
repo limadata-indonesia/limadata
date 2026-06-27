@@ -1302,99 +1302,163 @@ const CAT_COLORS = {
 };
 
 function Articles({ articles: ARTICLES }) {
+  if (!ARTICLES.length) return null;
+  const [featured, ...rest] = ARTICLES;
+  const fc = CAT_COLORS[featured.category] ?? { bg: "rgba(255,255,255,0.06)", text: B.dim };
+
   return (
-    <section id="articles" className="py-28 px-6 md:px-16 lg:px-24 relative" style={{ background: B.surface }}>
-      <div aria-hidden="true" style={{ position:"absolute", top:0, left:0, right:0, height:1, background:`linear-gradient(to right,transparent,${B.borderO},transparent)` }} />
+    <section id="articles" style={{ background: B.surface, padding: "96px 24px", position: "relative" }}>
+      <style>{`
+        .art-feat { transition: opacity 0.18s; }
+        .art-feat:hover { opacity: 0.88; }
+        .art-small { transition: opacity 0.15s, transform 0.18s; }
+        .art-small:hover { opacity: 0.82; transform: translateY(-2px); }
+        .art-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        @media (max-width: 900px) { .art-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 580px) { .art-grid { grid-template-columns: 1fr; } }
+      `}</style>
 
-      {/* Header */}
-      <div className="flex items-end justify-between mb-14 flex-wrap gap-4">
-        <m.div {...reveal()}>
-          <p className="text-xs uppercase tracking-[0.2em] mb-3 font-semibold" style={{ color: B.orange }}>
-            Insights
-          </p>
-          <h2 className="font-bold leading-tight" style={{ color: B.white, fontSize: "clamp(1.6rem, 2.8vw, 2.2rem)" }}>
-            Latest articles
-          </h2>
-        </m.div>
-        <m.a
-          {...reveal(0.1)}
-          href="#"
-          className="flex items-center gap-2 text-sm font-semibold transition-opacity hover:opacity-70"
-          style={{ color: B.orange, textDecoration: "none" }}
-        >
-          View all articles
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M7 17L17 7M7 7h10v10"/>
-          </svg>
+      <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(to right, transparent, ${B.borderO}, transparent)` }} />
+
+      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+
+        {/* ── Header ─────────────────────────────────────── */}
+        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: 48, flexWrap: "wrap", gap: 16 }}>
+          <m.div {...reveal()}>
+            <p style={{ color: B.orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", margin: "0 0 10px" }}>
+              Insights
+            </p>
+            <h2 style={{ color: B.white, fontWeight: 800, fontSize: "clamp(1.6rem, 2.8vw, 2.2rem)", lineHeight: 1.15, margin: 0 }}>
+              Latest articles
+            </h2>
+          </m.div>
+          <m.a {...reveal(0.1)} href="/articles"
+            style={{ display: "inline-flex", alignItems: "center", gap: 6, color: B.orange, fontSize: 13, fontWeight: 600, textDecoration: "none", opacity: 0.8 }}>
+            View all
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M7 17L17 7M7 7h10v10"/>
+            </svg>
+          </m.a>
+        </div>
+
+        {/* ── Featured article ────────────────────────────── */}
+        <m.a {...reveal(0.05)} href={featured.href || "#"} className="art-feat"
+          style={{ display: "block", textDecoration: "none", marginBottom: 12 }}>
+          <div style={{
+            position: "relative", overflow: "hidden",
+            borderRadius: 20,
+            background: B.card,
+            border: `1px solid ${B.border}`,
+            borderLeft: `3px solid ${fc.text}`,
+            padding: "44px 52px",
+          }}>
+            {/* Radial glow behind content */}
+            <div aria-hidden="true" style={{
+              position: "absolute", inset: 0,
+              background: `radial-gradient(ellipse at 15% 50%, ${fc.bg} 0%, transparent 65%)`,
+              pointerEvents: "none",
+            }} />
+
+            {/* Watermark number */}
+            <div aria-hidden="true" style={{
+              position: "absolute", right: 44, top: "50%", transform: "translateY(-50%)",
+              fontSize: "clamp(7rem, 13vw, 10rem)", fontWeight: 900,
+              color: "rgba(255,255,255,0.03)", lineHeight: 1, userSelect: "none", letterSpacing: "-0.04em",
+            }}>01</div>
+
+            {/* Content */}
+            <div style={{ position: "relative", maxWidth: 640, display: "flex", flexDirection: "column", gap: 16 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <span style={{ background: fc.bg, color: fc.text, fontSize: 10, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", padding: "3px 10px", borderRadius: 999 }}>
+                  {featured.category}
+                </span>
+                <span style={{ color: "rgba(255,255,255,0.18)", fontSize: 11, fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase" }}>Featured</span>
+              </div>
+
+              <h3 style={{ color: B.white, fontWeight: 800, fontSize: "clamp(1.1rem, 2vw, 1.5rem)", lineHeight: 1.35, margin: 0 }}>
+                {featured.title}
+              </h3>
+
+              <p style={{ color: B.dim, fontSize: 13, lineHeight: 1.8, margin: 0 }}>
+                {featured.excerpt}
+              </p>
+
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: 4 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <span style={{ color: B.muted, fontSize: 12 }}>{featured.date}</span>
+                  <span style={{ width: 3, height: 3, borderRadius: "50%", background: B.muted, display: "inline-block" }} />
+                  <span style={{ color: B.muted, fontSize: 12 }}>{featured.readTime}</span>
+                </div>
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 6, color: fc.text, fontSize: 12, fontWeight: 600 }}>
+                  Read article
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M7 17L17 7M7 7h10v10"/>
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
         </m.a>
-      </div>
 
-      {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-6xl mx-auto" style={{ perspective: 1200 }}>
-        {ARTICLES.map(({ category, title, excerpt, date, readTime, href }, i) => {
-          const c = CAT_COLORS[category] ?? { bg: "rgba(255,255,255,0.08)", text: B.dim };
-          return (
-            <TiltCard key={title}>
-              <m.a
-                {...reveal(i * 0.07)}
-                href={href}
-                style={{ textDecoration: "none", display: "flex", flexDirection: "column", height: "100%" }}
-                className="group"
-              >
-                <div
-                  className="h-full rounded-2xl flex flex-col transition-all duration-300"
-                  style={{ background: B.card, border: `1px solid ${B.border}` }}
-                >
-                  {/* Card body */}
-                  <div style={{ padding: "24px 24px 20px", flex: 1, display: "flex", flexDirection: "column", gap: 12 }}>
-                    {/* Category tag */}
-                    <span style={{
-                      display: "inline-block", alignSelf: "flex-start",
-                      background: c.bg, color: c.text,
-                      fontSize: 11, fontWeight: 700,
-                      letterSpacing: "0.1em", textTransform: "uppercase",
-                      padding: "3px 10px", borderRadius: 999,
-                    }}>
-                      {category}
-                    </span>
+        {/* ── Remaining articles grid ─────────────────────── */}
+        <div className="art-grid">
+          {rest.map(({ category, title, excerpt, date, readTime, href }, i) => {
+            const c = CAT_COLORS[category] ?? { bg: "rgba(255,255,255,0.06)", text: B.dim };
+            const num = String(i + 2).padStart(2, "0");
+            return (
+              <m.a key={title} {...reveal((i + 1) * 0.07)} href={href || "#"} className="art-small"
+                style={{ display: "block", textDecoration: "none" }}>
+                <div style={{
+                  height: "100%", borderRadius: 16,
+                  background: B.card,
+                  border: `1px solid ${B.border}`,
+                  borderTop: `2px solid ${c.text}`,
+                  padding: "22px 22px 18px",
+                  display: "flex", flexDirection: "column", gap: 12,
+                  position: "relative", overflow: "hidden",
+                }}>
+                  {/* Watermark number */}
+                  <div aria-hidden="true" style={{
+                    position: "absolute", right: 14, top: 10,
+                    fontSize: 40, fontWeight: 900, color: "rgba(255,255,255,0.04)",
+                    lineHeight: 1, userSelect: "none", letterSpacing: "-0.04em",
+                  }}>{num}</div>
 
-                    {/* Title */}
-                    <h3
-                      className="font-bold leading-snug transition-colors duration-200 group-hover:text-orange-400"
-                      style={{ color: B.white, fontSize: 16, lineHeight: 1.4 }}
-                    >
-                      {title}
-                    </h3>
+                  {/* Category badge */}
+                  <span style={{ display: "inline-block", alignSelf: "flex-start", background: c.bg, color: c.text, fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", padding: "2px 9px", borderRadius: 999 }}>
+                    {category}
+                  </span>
 
-                    {/* Excerpt */}
-                    <p style={{ color: B.muted, fontSize: 13, lineHeight: 1.7, flex: 1 }}>
-                      {excerpt}
-                    </p>
-                  </div>
+                  {/* Title */}
+                  <h3 style={{ color: B.white, fontWeight: 700, fontSize: 14, lineHeight: 1.45, margin: 0 }}>
+                    {title}
+                  </h3>
 
-                  {/* Card footer */}
-                  <div style={{
-                    padding: "14px 24px 20px",
-                    borderTop: `1px solid ${B.border}`,
-                    display: "flex", alignItems: "center", justifyContent: "space-between",
+                  {/* Excerpt — 3 lines max */}
+                  <p style={{
+                    color: B.muted, fontSize: 12, lineHeight: 1.72, margin: 0, flex: 1,
+                    display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden",
                   }}>
-                    <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-                      <span style={{ color: B.muted, fontSize: 12 }}>{date}</span>
-                      <span style={{ width: 3, height: 3, borderRadius: "50%", background: B.muted, display: "inline-block" }} />
-                      <span style={{ color: B.muted, fontSize: 12 }}>{readTime}</span>
+                    {excerpt}
+                  </p>
+
+                  {/* Footer */}
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: 12, borderTop: `1px solid ${B.border}`, marginTop: "auto" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                      <span style={{ color: B.muted, fontSize: 11 }}>{date}</span>
+                      <span style={{ width: 2, height: 2, borderRadius: "50%", background: B.muted, display: "inline-block" }} />
+                      <span style={{ color: B.muted, fontSize: 11 }}>{readTime}</span>
                     </div>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={B.orange} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-                      style={{ opacity: 0.6, transition: "opacity 0.2s" }}
-                      className="group-hover:opacity-100"
-                    >
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={c.text} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.55 }}>
                       <path d="M7 17L17 7M7 7h10v10"/>
                     </svg>
                   </div>
                 </div>
               </m.a>
-            </TiltCard>
-          );
-        })}
+            );
+          })}
+        </div>
+
       </div>
     </section>
   );
