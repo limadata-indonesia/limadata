@@ -101,6 +101,57 @@ export default function ArticlePage({ article }) {
 
   return (
     <div style={{ background: B.dark, minHeight: "100vh" }}>
+      <style>{`
+        .article-html { color: rgba(255,255,255,0.62); font-size: 17px; line-height: 1.85; }
+        .article-html h1,.article-html h2,.article-html h3,.article-html h4,.article-html h5 {
+          color: #fff; font-weight: 700; line-height: 1.3; margin: 44px 0 16px;
+        }
+        .article-html h2 { font-size: 22px; padding-left: 16px; border-left: 3px solid #E8601A; }
+        .article-html h3 { font-size: 18px; }
+        .article-html h4 { font-size: 16px; }
+        .article-html h5 { font-size: 14px; }
+        .article-html p  { margin: 0 0 20px; }
+        .article-html a  { color: #E8601A; text-decoration: underline; text-underline-offset: 3px; transition: opacity 0.15s; }
+        .article-html a:hover { opacity: 0.75; }
+        .article-html strong,.article-html b { color: #fff; font-weight: 600; }
+        .article-html em,.article-html i { font-style: italic; }
+        .article-html ul,.article-html ol { padding-left: 24px; margin: 0 0 24px; display: flex; flex-direction: column; gap: 8px; }
+        .article-html li { color: rgba(255,255,255,0.62); line-height: 1.75; }
+        .article-html blockquote {
+          border-left: 3px solid #E8601A; margin: 36px 0;
+          padding: 18px 22px; background: rgba(232,96,26,0.05);
+          border-radius: 0 10px 10px 0; font-size: 19px; font-style: italic; color: #fff;
+        }
+        .article-html img { max-width: 100%; height: auto; border-radius: 10px; margin: 28px 0; display: block; }
+        .article-html code {
+          font-family: ui-monospace, monospace;
+          background: rgba(255,255,255,0.06); padding: 2px 7px;
+          border-radius: 4px; font-size: 0.88em; color: #E8601A;
+        }
+        .article-html pre {
+          background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+          border-radius: 10px; padding: 24px; overflow-x: auto; margin: 28px 0;
+        }
+        .article-html pre code { background: none; padding: 0; color: rgba(255,255,255,0.7); font-size: 14px; }
+        .article-html hr { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 48px 0; }
+        /* ── Tables ── */
+        .article-html table { width: 100%; border-collapse: collapse; margin: 36px 0; font-size: 14px; }
+        .article-html thead { background: rgba(232,96,26,0.1); }
+        .article-html th {
+          color: #fff; font-size: 11px; font-weight: 700;
+          text-transform: uppercase; letter-spacing: 0.08em;
+          padding: 12px 16px; text-align: left;
+          border-bottom: 2px solid rgba(232,96,26,0.3);
+        }
+        .article-html td {
+          color: rgba(255,255,255,0.62); padding: 12px 16px;
+          border-bottom: 1px solid rgba(255,255,255,0.06); vertical-align: top; line-height: 1.6;
+        }
+        .article-html tr:last-child td { border-bottom: none; }
+        .article-html tbody tr { transition: background 0.12s; }
+        .article-html tbody tr:hover td { background: rgba(255,255,255,0.025); }
+        .article-html table { border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; overflow: hidden; }
+      `}</style>
 
       {/* ── Nav ── */}
       <nav style={{
