@@ -2,21 +2,20 @@ import LimadataPage from "../components/LimadataPage";
 import { createClient } from "../lib/supabase-server";
 
 export const metadata = {
-  title: "Jasa SEO Indonesia Terpercaya | Limadata — Agency SEO & GEO",
+  title: "Trusted SEO Agency in Indonesia | Limadata — SEO & GEO Agency",
   description:
-    "Limadata adalah jasa SEO Indonesia terpercaya. Kami membantu bisnis Indonesia raih peringkat #1 di Google, tampil di AI Overview, ChatGPT & Gemini. Audit SEO gratis dalam 48 jam.",
+    "Limadata is Indonesia's trusted SEO agency. We help Indonesian businesses reach #1 on Google and appear in AI Overviews, ChatGPT & Gemini. Free SEO audit in 48 hours.",
   keywords: [
     "seo indonesia",
-    "jasa seo indonesia",
-    "agency seo indonesia",
+    "seo agency indonesia",
+    "indonesia seo services",
     "seo jakarta",
-    "jasa seo",
-    "optimasi seo",
     "digital marketing indonesia",
     "geo optimization",
     "generative engine optimization",
     "ai seo",
-    "seo agency indonesia",
+    "search engine optimization indonesia",
+    "limadata",
   ],
   authors: [{ name: "Limadata" }],
   creator: "Limadata",
@@ -28,27 +27,27 @@ export const metadata = {
   },
   alternates: { canonical: "https://limadata.co.id" },
   openGraph: {
-    title: "Jasa SEO Indonesia Terpercaya | Limadata",
+    title: "Trusted SEO Agency in Indonesia | Limadata",
     description:
-      "Agency SEO Indonesia yang membantu bisnis raih peringkat #1 di Google, tampil di AI Overview, ChatGPT & Gemini. Audit gratis dalam 48 jam.",
+      "Indonesia's SEO agency helping businesses reach #1 on Google and appear in AI Overviews, ChatGPT & Gemini. Free audit in 48 hours.",
     url: "https://limadata.co.id",
     siteName: "Limadata",
-    locale: "id_ID",
+    locale: "en_US",
     type: "website",
     images: [
       {
         url: "https://limadata.co.id/wp-content/uploads/2026/06/LOGO-LIMADATA-scaled-200x55.png",
         width: 1200,
         height: 630,
-        alt: "Limadata — Jasa SEO Indonesia Terpercaya",
+        alt: "Limadata — Trusted SEO Agency in Indonesia",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jasa SEO Indonesia Terpercaya | Limadata",
+    title: "Trusted SEO Agency in Indonesia | Limadata",
     description:
-      "Agency SEO Indonesia yang membantu bisnis meraih peringkat #1 di Google dan tampil di AI Overview, ChatGPT & Gemini.",
+      "Indonesia's SEO agency helping businesses reach #1 on Google and appear in AI Overviews, ChatGPT & Gemini.",
     images: ["https://limadata.co.id/wp-content/uploads/2026/06/LOGO-LIMADATA-scaled-200x55.png"],
   },
 };
@@ -60,7 +59,7 @@ const jsonLd = [
     "@id": "https://limadata.co.id/#website",
     url: "https://limadata.co.id",
     name: "Limadata",
-    description: "Agency SEO & GEO Indonesia terpercaya",
+    description: "Indonesia's trusted SEO & GEO agency",
     publisher: { "@id": "https://limadata.co.id/#organization" },
     inLanguage: "id",
     potentialAction: {
@@ -86,7 +85,7 @@ const jsonLd = [
       height: 55,
     },
     description:
-      "Limadata adalah agency SEO Indonesia terpercaya yang membantu bisnis meraih peringkat #1 di Google dan visibilitas di AI search seperti ChatGPT, Gemini, dan Perplexity.",
+      "Limadata is Indonesia's trusted SEO agency helping businesses reach #1 on Google and gain visibility in AI search tools like ChatGPT, Gemini, and Perplexity.",
     address: {
       "@type": "PostalAddress",
       streetAddress: "Jl. Jend. Sudirman Kav. 52–53, Senayan, Kebayoran Baru",

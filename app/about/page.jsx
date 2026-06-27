@@ -2,14 +2,14 @@ import { createClient } from "../../lib/supabase-server";
 import AboutPage from "../../components/LimadataAboutPage";
 
 export const metadata = {
-  title: "About Limadata | Jasa SEO & GEO Indonesia",
+  title: "About Limadata | SEO & GEO Agency in Indonesia",
   description: "Learn about Limadata — Indonesia's data-driven SEO and Generative Engine Optimization agency helping businesses grow organic traffic.",
   alternates: { canonical: "https://limadata.co.id/about" },
   openGraph: {
-    title: "About Limadata | Jasa SEO & GEO Indonesia",
+    title: "About Limadata | SEO & GEO Agency in Indonesia",
     description: "Learn about Limadata — Indonesia's data-driven SEO and GEO agency.",
     url: "https://limadata.co.id/about",
-    siteName: "Limadata", locale: "id_ID",
+    siteName: "Limadata", locale: "en_US",
   },
 };
 

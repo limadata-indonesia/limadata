@@ -10,13 +10,13 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: "Jasa SEO Indonesia Terpercaya | Limadata — Agency SEO & GEO",
-  description: "Limadata adalah jasa SEO Indonesia terpercaya. Kami membantu bisnis Indonesia raih peringkat #1 di Google, tampil di AI Overview, ChatGPT & Gemini.",
+  title: "Trusted SEO Agency in Indonesia | Limadata — SEO & GEO Agency",
+  description: "Limadata is Indonesia's trusted SEO agency. We help Indonesian businesses reach #1 on Google and appear in AI Overviews, ChatGPT & Gemini. Free SEO audit in 48 hours.",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="id" className={poppins.variable}>
+    <html lang="en" className={poppins.variable}>
       <body>{children}</body>
     </html>
   );

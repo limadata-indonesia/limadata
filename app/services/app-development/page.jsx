@@ -7,7 +7,7 @@ export const metadata = {
   title: s.metaTitle,
   description: s.metaDesc,
   alternates: { canonical: s.canonical },
-  openGraph: { title: s.metaTitle, description: s.metaDesc, url: s.canonical, siteName: "Limadata", locale: "id_ID", type: "website" },
+  openGraph: { title: s.metaTitle, description: s.metaDesc, url: s.canonical, siteName: "Limadata", locale: "en_US", type: "website" },
   twitter: { card: "summary_large_image", title: s.metaTitle, description: s.metaDesc },
 };
 
