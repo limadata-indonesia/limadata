@@ -21,3 +21,4 @@ body { background: #080808; font-family: var(--font-poppins), sans-serif; }
 .article-html ol li::before  { content: counter(ol-c) "."; color: #E8601A; font-weight: 700; flex-shrink: 0; min-width: 20px; }
 .article-html blockquote     { border-left: 3px solid #E8601A; padding: 16px 20px; margin: 28px 0; font-style: italic; color: #fff; font-size: 19px; line-height: 1.6; background: rgba(232,96,26,0.05); border-radius: 0 8px 8px 0; }
 .article-html blockquote p   { margin: 0; }
+.article-html img            { max-width: 100%; height: auto; border-radius: 10px; margin: 32px 0; display: block; }
