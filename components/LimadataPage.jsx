@@ -1608,6 +1608,7 @@ const FOOTER_COMPANY = [
   { label: "How It Works",   href: "#how-it-works"  },
   { label: "Case Studies",   href: "#case-studies"  },
   { label: "Results",        href: "#results"        },
+  { label: "About",          href: "/about"          },
   { label: "FAQ",            href: "#faq"            },
   { label: "Free Audit",     href: "#cta"            },
   { label: "limadata.co.id", href: "https://limadata.co.id", external: true },
