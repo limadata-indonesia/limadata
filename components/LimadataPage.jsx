@@ -645,7 +645,7 @@ function Hero() {
           padding: "80px max(24px, calc((100vw - 1200px) / 2))",
           display: "flex",
           alignItems: "center",
-          gap: 56,
+          gap: 96,
         }}
       >
         {/* ── Left copy ── */}
