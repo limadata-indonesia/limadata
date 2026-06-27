@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Link from "next/link";
 import {
   LazyMotion, domAnimation, m,
   useMotionValue, useTransform, useSpring,
@@ -946,8 +947,9 @@ function CaseStudies({ cases }) {
       >
         <style>{`.cs-track::-webkit-scrollbar{display:none}`}</style>
         <div className="cs-track" style={{ display:"flex", gap:16, width:"max-content", alignItems:"stretch" }}>
-          {CASES.map(({ company, abbr, description, change, service, bg, dot }, i) => {
+          {CASES.map(({ company, abbr, description, change, service, bg, dot, slug }, i) => {
             const textTop = i % 2 === 0;
+            const href    = slug ? `/case-studies/${slug}` : null;
 
             const TextBlock = (
               <div style={{
@@ -971,13 +973,16 @@ function CaseStudies({ cases }) {
                       <p style={{ color: B.muted, fontSize: 10, marginTop: 3, textTransform:"uppercase", letterSpacing:"0.06em" }}>Services Taken</p>
                     </div>
                   </div>
-                  <div style={{
-                    width: 34, height: 34, borderRadius: "50%", flexShrink: 0,
-                    background: dot,
-                    display:"flex", alignItems:"center", justifyContent:"center",
-                    cursor:"pointer",
-                    boxShadow: `0 0 16px ${dot}55`,
-                  }}>
+                  <div
+                    onClick={href ? () => window.location.href = href : undefined}
+                    style={{
+                      width: 34, height: 34, borderRadius: "50%", flexShrink: 0,
+                      background: dot,
+                      display:"flex", alignItems:"center", justifyContent:"center",
+                      cursor: href ? "pointer" : "default",
+                      boxShadow: `0 0 16px ${dot}55`,
+                    }}
+                  >
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M7 17L17 7M7 7h10v10" />
                     </svg>
@@ -1013,9 +1018,8 @@ function CaseStudies({ cases }) {
               </div>
             );
 
-            return (
+            const card = (
               <m.div
-                key={company}
                 {...reveal(i * 0.07)}
                 style={{
                   width: 292, flexShrink: 0,
@@ -1032,6 +1036,10 @@ function CaseStudies({ cases }) {
                 {textTop ? <>{TextBlock}{ImageBlock}</> : <>{ImageBlock}{TextBlock}</>}
               </m.div>
             );
+
+            return href
+              ? <Link key={company} href={href} style={{ textDecoration:"none" }}>{card}</Link>
+              : <React.Fragment key={company}>{card}</React.Fragment>;
           })}
         </div>
       </div>
