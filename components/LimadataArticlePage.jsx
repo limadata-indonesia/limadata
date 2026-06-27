@@ -251,9 +251,16 @@ export default function ArticlePage({ article }) {
           transition={{ duration: 0.9, delay: 0.4, ease: EASE }}
           style={{ maxWidth: 760, margin: "0 auto" }}
         >
-          {article.content.map((block, i) => (
-            <ContentBlock key={i} block={block} />
-          ))}
+          {article.content_html
+            ? <div
+                className="article-html"
+                dangerouslySetInnerHTML={{ __html: article.content_html }}
+                style={{ color: B.dim, fontSize: 17, lineHeight: 1.85 }}
+              />
+            : article.content?.map((block, i) => (
+                <ContentBlock key={i} block={block} />
+              ))
+          }
         </motion.div>
       </main>
 

@@ -4,3 +4,20 @@
 
 html, body { margin: 0; padding: 0; }
 body { background: #080808; font-family: var(--font-poppins), sans-serif; }
+
+/* Article WYSIWYG HTML output styles */
+.article-html p              { margin: 0 0 18px; }
+.article-html h2             { color: #fff; font-size: 22px; font-weight: 700; line-height: 1.3; margin: 44px 0 14px; padding-left: 16px; border-left: 3px solid #E8601A; }
+.article-html h3             { color: #fff; font-size: 18px; font-weight: 600; line-height: 1.35; margin: 32px 0 10px; }
+.article-html strong         { color: #fff; font-weight: 700; }
+.article-html em             { font-style: italic; }
+.article-html a              { color: #E8601A; text-decoration: underline; }
+.article-html a:hover        { opacity: 0.8; }
+.article-html ul             { list-style: none; padding: 0; margin: 0 0 18px; display: flex; flex-direction: column; gap: 10px; }
+.article-html ol             { list-style: none; padding: 0; margin: 0 0 18px; display: flex; flex-direction: column; gap: 10px; counter-reset: ol-c; }
+.article-html ul li          { display: flex; gap: 12px; align-items: flex-start; }
+.article-html ul li::before  { content: "→"; color: #E8601A; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.article-html ol li          { display: flex; gap: 12px; align-items: flex-start; counter-increment: ol-c; }
+.article-html ol li::before  { content: counter(ol-c) "."; color: #E8601A; font-weight: 700; flex-shrink: 0; min-width: 20px; }
+.article-html blockquote     { border-left: 3px solid #E8601A; padding: 16px 20px; margin: 28px 0; font-style: italic; color: #fff; font-size: 19px; line-height: 1.6; background: rgba(232,96,26,0.05); border-radius: 0 8px 8px 0; }
+.article-html blockquote p   { margin: 0; }

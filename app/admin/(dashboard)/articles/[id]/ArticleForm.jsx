@@ -2,12 +2,24 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import BlockEditor from "../../../../../components/admin/BlockEditor";
+import RichTextEditor from "../../../../../components/admin/RichTextEditor";
 
 const CATEGORIES = ["GEO", "SEO", "Technical SEO", "Link Building", "Digital Marketing"];
 
 function slugify(title) {
   return title.toLowerCase().replace(/[^a-z0-9\s-]/g, "").replace(/\s+/g, "-").replace(/-+/g, "-").trim();
+}
+
+/* ── Link scanner ──────────────────────────────────── */
+function scanLinks(html) {
+  if (!html) return { internal: 0, external: 0 };
+  const matches = [...html.matchAll(/href="([^"]+)"/g)];
+  let internal = 0, external = 0;
+  matches.forEach(([, href]) => {
+    if (href.startsWith("/") || href.includes("limadata.co.id")) internal++;
+    else if (href.startsWith("http")) external++;
+  });
+  return { internal, external };
 }
 
 /* ── SEO score dot ─────────────────────────────────── */
@@ -53,13 +65,16 @@ function SeoPanel({ form, set, inp, lbl }) {
   const kwInSlug  = keyword && form.slug.toLowerCase().includes(keyword.replace(/\s+/g, "-"));
   const titleOk   = title.length >= 50 && title.length <= 60;
   const descOk    = desc.length  >= 120 && desc.length  <= 160;
+  const { internal, external } = scanLinks(form.content_html);
 
   const checks = [
-    { label: "Keyphrase in SEO title",           pass: !!kwInTitle },
-    { label: "Keyphrase in meta description",    pass: !!kwInDesc  },
-    { label: "Keyphrase in URL slug",            pass: !!kwInSlug  },
-    { label: "SEO title length (50–60 chars)",   pass: titleOk     },
-    { label: "Meta description (120–160 chars)", pass: descOk      },
+    { label: "Keyphrase in SEO title",           pass: !!kwInTitle     },
+    { label: "Keyphrase in meta description",    pass: !!kwInDesc      },
+    { label: "Keyphrase in URL slug",            pass: !!kwInSlug      },
+    { label: "SEO title length (50–60 chars)",   pass: titleOk         },
+    { label: "Meta description (120–160 chars)", pass: descOk          },
+    { label: "Internal link (1+)",               pass: internal >= 1   },
+    { label: "External link (1+)",               pass: external >= 1   },
   ];
   const score = checks.filter(c => c.pass).length;
   const scoreColor = score >= 4 ? "#22c55e" : score >= 2 ? "#f59e0b" : "#94a3b8";
@@ -167,6 +182,7 @@ export default function ArticleForm({ article, isNew }) {
     author_initials:  article?.author_initials  ?? "HG",
     author_role:      article?.author_role      ?? "SEO Strategist, Limadata",
     content:          article?.content          ?? [],
+    content_html:     article?.content_html     ?? "",
     published:        article?.published        ?? true,
     focus_keyword:    article?.focus_keyword    ?? "",
     meta_title:       article?.meta_title       ?? "",
@@ -298,7 +314,7 @@ export default function ArticleForm({ article, isNew }) {
           {/* Content */}
           <div>
             <label style={{ display: "block", fontSize: 15, fontWeight: 600, color: "#0f172a", marginBottom: 12 }}>Content</label>
-            <BlockEditor blocks={form.content} onChange={blocks => set("content", blocks)} />
+            <RichTextEditor value={form.content_html} onChange={html => set("content_html", html)} />
           </div>
 
           <button type="submit" style={{ display: "none" }} />
