@@ -11,22 +11,24 @@ export async function generateMetadata({ params }) {
     const supabase = createClient();
     const { data: article } = await supabase
       .from("articles")
-      .select("title, excerpt, date, slug")
+      .select("title, excerpt, slug, meta_title, meta_description")
       .eq("slug", params.slug)
       .eq("published", true)
       .single();
 
     if (!article) return {};
+    const seoTitle = article.meta_title       || article.title;
+    const seoDesc  = article.meta_description || article.excerpt;
     return {
-      title: `${article.title} | Limadata`,
-      description: article.excerpt,
+      title: `${seoTitle} | Limadata`,
+      description: seoDesc,
       alternates: { canonical: `https://limadata.co.id/articles/${params.slug}` },
       openGraph: {
-        title: article.title, description: article.excerpt,
+        title: seoTitle, description: seoDesc,
         url: `https://limadata.co.id/articles/${params.slug}`,
         siteName: "Limadata", locale: "id_ID", type: "article",
       },
-      twitter: { card: "summary_large_image", title: article.title, description: article.excerpt },
+      twitter: { card: "summary_large_image", title: seoTitle, description: seoDesc },
     };
   } catch (_) { return {}; }
 }
