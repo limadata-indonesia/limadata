@@ -12,11 +12,15 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     setError("");
-    const supabase = createClient();
-    const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
-    if (authError) { setError(authError.message); setLoading(false); return; }
-    // Hard redirect so the session cookie is fully in place before the middleware runs
-    window.location.href = "/admin";
+    try {
+      const supabase = createClient();
+      const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
+      if (authError) { setError(authError.message); setLoading(false); return; }
+      window.location.href = "/admin";
+    } catch {
+      setError("Connection error — check your network and try again.");
+      setLoading(false);
+    }
   }
 
   const field = {

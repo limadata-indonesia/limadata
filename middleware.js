@@ -33,7 +33,10 @@ export async function middleware(request) {
     }
   );
 
-  const { data: { user } } = await supabase.auth.getUser();
+  // getSession() decodes the JWT from the cookie locally — no Supabase network call,
+  // which avoids middleware hanging on cold starts or slow connections.
+  const { data: { session } } = await supabase.auth.getSession();
+  const user = session?.user ?? null;
 
   const isLoginPage = pathname === "/admin/login";
   const isAdminPage = pathname.startsWith("/admin");
