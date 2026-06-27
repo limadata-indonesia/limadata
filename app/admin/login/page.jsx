@@ -17,8 +17,8 @@ export default function LoginPage() {
       const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
       if (authError) { setError(authError.message); setLoading(false); return; }
       window.location.href = "/admin";
-    } catch {
-      setError("Connection error — check your network and try again.");
+    } catch (err) {
+      setError(err?.message || "Connection error — check your network and try again.");
       setLoading(false);
     }
   }
