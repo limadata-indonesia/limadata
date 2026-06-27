@@ -135,22 +135,31 @@ export default function ArticlePage({ article }) {
         .article-html pre code { background: none; padding: 0; color: rgba(255,255,255,0.7); font-size: 14px; }
         .article-html hr { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 48px 0; }
         /* ── Tables ── */
-        .article-html table { width: 100%; border-collapse: collapse; margin: 36px 0; font-size: 14px; }
-        .article-html thead { background: rgba(232,96,26,0.1); }
+        .article-html table {
+          width: 100%; border-collapse: collapse; margin: 36px 0; font-size: 14px;
+          border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden;
+          background: rgba(255,255,255,0.02);
+        }
+        .article-html thead { background: rgba(232,96,26,0.12); }
         .article-html th {
           color: #fff; font-size: 11px; font-weight: 700;
           text-transform: uppercase; letter-spacing: 0.08em;
-          padding: 12px 16px; text-align: left;
-          border-bottom: 2px solid rgba(232,96,26,0.3);
+          padding: 13px 16px; text-align: left;
+          border-right: 1px solid rgba(232,96,26,0.2);
+          border-bottom: 2px solid rgba(232,96,26,0.35);
         }
+        .article-html th:last-child { border-right: none; }
         .article-html td {
-          color: rgba(255,255,255,0.62); padding: 12px 16px;
-          border-bottom: 1px solid rgba(255,255,255,0.06); vertical-align: top; line-height: 1.6;
+          color: rgba(255,255,255,0.7); padding: 12px 16px;
+          border-right: 1px solid rgba(255,255,255,0.06);
+          border-bottom: 1px solid rgba(255,255,255,0.06);
+          vertical-align: top; line-height: 1.6;
+          background: rgba(255,255,255,0.01);
         }
+        .article-html td:last-child { border-right: none; }
         .article-html tr:last-child td { border-bottom: none; }
-        .article-html tbody tr { transition: background 0.12s; }
-        .article-html tbody tr:hover td { background: rgba(255,255,255,0.025); }
-        .article-html table { border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; overflow: hidden; }
+        .article-html tbody tr:nth-child(even) td { background: rgba(255,255,255,0.03); }
+        .article-html tbody tr:hover td { background: rgba(232,96,26,0.05) !important; transition: background 0.12s; }
       `}</style>
 
       {/* ── Nav ── */}
