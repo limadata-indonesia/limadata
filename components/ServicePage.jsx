@@ -78,7 +78,7 @@ function Nav({ currentSlug }) {
       >
         <a href="/" aria-label="Limadata home">
           <img
-            src="https://limadata.co.id/wp-content/uploads/2026/06/LOGO-LIMADATA-scaled-200x55.png"
+            src="/logo-limadata.png"
             alt="Limadata"
             style={{ height: 32, filter: "brightness(0) invert(1)" }}
           />
@@ -252,7 +252,7 @@ function Footer() {
         <div style={{ ...col, gap: 16 }}>
           <a href="/">
             <img
-              src="https://limadata.co.id/wp-content/uploads/2026/06/LOGO-LIMADATA-scaled-200x55.png"
+              src="/logo-limadata.png"
               alt="Limadata"
               style={{ height: 26, filter: "brightness(0) invert(1)" }}
             />

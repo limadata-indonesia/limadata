@@ -46,7 +46,7 @@ export default function Sidebar() {
       {/* Logo */}
       <div style={{ padding: "24px 20px 20px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
         <img
-          src="https://limadata.co.id/wp-content/uploads/2026/06/LOGO-LIMADATA-scaled-200x55.png"
+          src="/logo-limadata.png"
           alt="Limadata"
           style={{ height: 26, filter: "brightness(0) invert(1)", opacity: 0.9 }}
         />

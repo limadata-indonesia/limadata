@@ -58,7 +58,7 @@ export default function AboutPage({ about }) {
       }}>
         <Link href="/">
           <img
-            src="https://limadata.co.id/wp-content/uploads/2026/06/LOGO-LIMADATA-scaled-200x55.png"
+            src="/logo-limadata.png"
             alt="Limadata"
             style={{ height: 28, filter: "brightness(0) invert(1)" }}
           />
@@ -332,7 +332,7 @@ export default function AboutPage({ about }) {
         flexWrap: "wrap", gap: 12,
       }}>
         <Link href="/">
-          <img src="https://limadata.co.id/wp-content/uploads/2026/06/LOGO-LIMADATA-scaled-200x55.png" alt="Limadata" style={{ height: 22, filter: "brightness(0) invert(1)", opacity: 0.5 }} />
+          <img src="/logo-limadata.png" alt="Limadata" style={{ height: 22, filter: "brightness(0) invert(1)", opacity: 0.5 }} />
         </Link>
         <p style={{ color: B.muted, fontSize: 12 }}>© {new Date().getFullYear()} PT Lima Data Digital. All rights reserved.</p>
       </footer>

@@ -34,7 +34,7 @@ export default function LoginPage() {
       <div style={{ background: "#1e293b", borderRadius: 16, padding: "40px 36px", width: "100%", maxWidth: 400, border: "1px solid rgba(255,255,255,0.06)" }}>
         <div style={{ textAlign: "center", marginBottom: 32 }}>
           <img
-            src="https://limadata.co.id/wp-content/uploads/2026/06/LOGO-LIMADATA-scaled-200x55.png"
+            src="/logo-limadata.png"
             alt="Limadata"
             style={{ height: 30, filter: "brightness(0) invert(1)", marginBottom: 16 }}
           />

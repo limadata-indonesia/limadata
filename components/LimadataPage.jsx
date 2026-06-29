@@ -186,7 +186,7 @@ function Nav() {
         {/* Logo */}
         <a href="/" aria-label="Limadata home">
           <img
-            src="https://limadata.co.id/wp-content/uploads/2026/06/LOGO-LIMADATA-scaled-200x55.png"
+            src="/logo-limadata.png"
             alt="Limadata — Jasa SEO Indonesia"
             style={{ height: 32, filter: "brightness(0) invert(1)" }}
           />
@@ -1517,7 +1517,7 @@ function Footer() {
         <div style={{ ...col, gap: 20, gridColumn: "span 1" }}>
           <a href="/" aria-label="Limadata home">
             <img
-              src="https://limadata.co.id/wp-content/uploads/2026/06/LOGO-LIMADATA-scaled-200x55.png"
+              src="/logo-limadata.png"
               alt="Limadata — Jasa SEO Indonesia Terpercaya"
               style={{ height: 28, filter: "brightness(0) invert(1)" }}
             />
