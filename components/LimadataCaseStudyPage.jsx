@@ -341,7 +341,7 @@ export default function CaseStudyPage({ cs }) {
         <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(to right, transparent, ${B.orange}, transparent)` }} />
         <div style={{ position: "relative", zIndex: 1, maxWidth: 520, margin: "0 auto" }}>
           <p style={{ color: B.orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 16 }}>Ready to grow?</p>
-          <h2 style={{ color: B.white, fontSize: "clamp(1.6rem, 4vw, 2.4rem)", fontWeight: 800, lineHeight: 1.2, marginBottom: 16 }}>
+          <h2 style={{ color: B.white, fontSize: "clamp(1.35rem, 2.6vw, 1.9rem)", fontWeight: 500, lineHeight: 1.2, marginBottom: 16 }}>
             Get your free SEO &amp; GEO audit
           </h2>
           <p style={{ color: B.muted, fontSize: 15, lineHeight: 1.7, marginBottom: 36 }}>

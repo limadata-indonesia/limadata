@@ -450,7 +450,7 @@ function Features({ service }) {
         <p style={{ color: B.orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", marginBottom: 16 }}>
           What&apos;s Included
         </p>
-        <h2 style={{ color: B.white, fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 800, letterSpacing: "-0.02em" }}>
+        <h2 style={{ color: B.white, fontSize: "clamp(1.35rem, 2.6vw, 1.9rem)", fontWeight: 500, letterSpacing: "-0.02em" }}>
           Everything you need to{" "}
           <span style={{ color: B.orange }}>grow</span>
         </h2>
@@ -502,7 +502,7 @@ function Process({ service }) {
         <p style={{ color: B.orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", marginBottom: 16 }}>
           How We Work
         </p>
-        <h2 style={{ color: B.white, fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 800, letterSpacing: "-0.02em" }}>
+        <h2 style={{ color: B.white, fontSize: "clamp(1.35rem, 2.6vw, 1.9rem)", fontWeight: 500, letterSpacing: "-0.02em" }}>
           From kickoff to{" "}
           <span style={{ color: B.orange }}>results</span>
         </h2>
@@ -557,7 +557,7 @@ function CTA({ service }) {
         <p style={{ color: B.orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", marginBottom: 20 }}>
           Get Started
         </p>
-        <h2 style={{ color: B.white, fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 800, lineHeight: 1.12, letterSpacing: "-0.025em", marginBottom: 20 }}>
+        <h2 style={{ color: B.white, fontSize: "clamp(1.35rem, 2.6vw, 1.9rem)", fontWeight: 500, lineHeight: 1.12, letterSpacing: "-0.025em", marginBottom: 20 }}>
           Ready to grow your<br />
           <em style={{ color: B.orange, fontStyle: "italic" }}>search visibility?</em>
         </h2>

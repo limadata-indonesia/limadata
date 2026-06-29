@@ -346,7 +346,7 @@ export default function ArticlePage({ article }) {
           <p style={{ color: B.orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 16 }}>
             Ready to grow?
           </p>
-          <h2 style={{ color: B.white, fontSize: "clamp(1.6rem, 4vw, 2.4rem)", fontWeight: 800, lineHeight: 1.2, marginBottom: 16 }}>
+          <h2 style={{ color: B.white, fontSize: "clamp(1.35rem, 2.6vw, 1.9rem)", fontWeight: 500, lineHeight: 1.2, marginBottom: 16 }}>
             Get your free SEO &amp; GEO audit
           </h2>
           <p style={{ color: B.muted, fontSize: 15, lineHeight: 1.7, marginBottom: 36 }}>

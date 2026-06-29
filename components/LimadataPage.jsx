@@ -554,7 +554,7 @@ function Services() {
         <p className="text-xs uppercase tracking-[0.2em] mb-4 font-semibold" style={{ color: B.orange }}>
           What we do
         </p>
-        <h2 className="font-bold leading-tight" style={{ color: B.white, fontSize: "clamp(1.6rem, 2.8vw, 2.2rem)" }}>
+        <h2 className="font-medium leading-tight" style={{ color: B.white, fontSize: "clamp(1.35rem, 2.6vw, 1.9rem)" }}>
           SEO &amp; Digital Services{" "}
           <span style={{ color: B.muted }}>for Indonesia</span>
         </h2>
@@ -650,7 +650,7 @@ function CaseStudies({ cases }) {
         <p className="text-xs uppercase tracking-[0.2em] mb-3 font-semibold" style={{ color: B.orange }}>
           Case Studies
         </p>
-        <h2 className="font-bold leading-tight" style={{ color: B.white, fontSize: "clamp(1.5rem, 2.8vw, 2.2rem)" }}>
+        <h2 className="font-medium leading-tight" style={{ color: B.white, fontSize: "clamp(1.35rem, 2.6vw, 1.9rem)" }}>
           How Indonesian businesses{" "}
           <span style={{ color: B.orange }}>grew with Limadata</span>
         </h2>
@@ -1100,7 +1100,7 @@ function Testimonials() {
       <div style={{ maxWidth: 1100, margin: "0 auto 48px", padding: "0 24px", textAlign: "center" }}>
         <m.div {...reveal()}>
           <p style={{ color: B.orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", margin: "0 0 10px" }}>Testimonials</p>
-          <h2 style={{ color: B.white, fontWeight: 800, fontSize: "clamp(1.6rem, 2.8vw, 2.2rem)", lineHeight: 1.15, margin: 0 }}>Loved by teams across Indonesia</h2>
+          <h2 style={{ color: B.white, fontWeight: 500, fontSize: "clamp(1.35rem, 2.6vw, 1.9rem)", lineHeight: 1.15, margin: 0 }}>Loved by teams across Indonesia</h2>
         </m.div>
       </div>
 
@@ -1163,7 +1163,7 @@ function Articles({ articles: ARTICLES }) {
             <p style={{ color: B.orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", margin: "0 0 10px" }}>
               Insights
             </p>
-            <h2 style={{ color: B.white, fontWeight: 800, fontSize: "clamp(1.6rem, 2.8vw, 2.2rem)", lineHeight: 1.15, margin: 0 }}>
+            <h2 style={{ color: B.white, fontWeight: 500, fontSize: "clamp(1.35rem, 2.6vw, 1.9rem)", lineHeight: 1.15, margin: 0 }}>
               Latest articles
             </h2>
           </m.div>
@@ -1314,7 +1314,7 @@ function FAQ() {
     <section id="faq" className="py-28 px-6 md:px-16 lg:px-24 relative" style={{ background: B.dark }}>
       <m.div {...reveal()} className="text-center mb-16">
         <p className="text-xs uppercase tracking-[0.2em] mb-4 font-semibold" style={{ color: B.orange }}>Questions</p>
-        <h2 className="font-bold leading-tight" style={{ color: B.white, fontSize: "clamp(1.6rem, 2.8vw, 2.2rem)" }}>
+        <h2 className="font-medium leading-tight" style={{ color: B.white, fontSize: "clamp(1.35rem, 2.6vw, 1.9rem)" }}>
           Frequently asked about{" "}
           <span style={{ color: B.orange }}>SEO Indonesia</span>
         </h2>
