@@ -1296,7 +1296,7 @@ function FAQ() {
               className="w-full flex items-start justify-between gap-4 py-6 text-left"
               onClick={() => setOpen(open === i ? null : i)}
             >
-              <span className="text-sm md:text-base font-semibold leading-snug" style={{ color: B.white }}>{q}</span>
+              <span className="text-sm md:text-base font-normal leading-snug" style={{ color: B.white }}>{q}</span>
               <m.span
                 animate={{ rotate: open === i ? 45 : 0 }}
                 transition={{ duration: 0.22 }}
