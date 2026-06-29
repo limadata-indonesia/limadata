@@ -1026,50 +1026,19 @@ const TESTIMONIALS = [
   { quote: "From keyword research to AI search visibility, Limadata covers the full picture. Our cost per lead dropped by half.", name: "Intan Permata", role: "Head of Marketing, Gojek", avatar: "https://i.pravatar.cc/120?img=20", image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=640&q=80" },
 ];
 
-function Avatar({ src, name, size = 42 }) {
-  return (
-    <img src={src} alt={name} width={size} height={size}
-      loading="lazy"
-      style={{ width: size, height: size, borderRadius: "50%", objectFit: "cover", flexShrink: 0, background: B.card, border: `1px solid ${B.border}` }} />
-  );
-}
 
 function TCard({ t }) {
-  if (t.image) {
-    /* Image card — backdrop-blur glass overlay + gradient darkening */
-    return (
-      <figure style={{ position: "relative", borderRadius: 18, overflow: "hidden", border: `1px solid ${B.border}`, minHeight: 280, display: "flex", alignItems: "flex-end", margin: 0,
-        backgroundImage: `url(${t.image})`, backgroundSize: "cover", backgroundPosition: "center" }}>
-        <div aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(8,8,8,0.15) 0%, rgba(8,8,8,0.55) 55%, rgba(8,8,8,0.9) 100%)" }} />
-        <div style={{ position: "relative", margin: 14, padding: 18, borderRadius: 14, width: "calc(100% - 28px)",
-          background: "rgba(20,20,20,0.45)", border: "1px solid rgba(255,255,255,0.12)", backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)" }}>
-          <blockquote style={{ color: B.white, fontSize: 15, lineHeight: 1.5, fontWeight: 500, margin: "0 0 14px" }}>“{t.quote}”</blockquote>
-          <figcaption style={{ display: "flex", alignItems: "center", gap: 11 }}>
-            <Avatar src={t.avatar} name={t.name} size={40} />
-            <div>
-              <div style={{ color: B.white, fontSize: 14, fontWeight: 700 }}>{t.name}</div>
-              <div style={{ color: "rgba(255,255,255,0.7)", fontSize: 12.5 }}>{t.role}</div>
-            </div>
-          </figcaption>
-        </div>
-      </figure>
-    );
-  }
-  /* Text card — clean */
   return (
     <figure style={{ background: B.card, border: `1px solid ${B.border}`, borderRadius: 18, padding: 24, margin: 0 }}>
-      <div aria-hidden="true" style={{ display: "flex", gap: 3, marginBottom: 14 }}>
+      <div aria-hidden=”true” style={{ display: “flex”, gap: 3, marginBottom: 14 }}>
         {Array.from({ length: 5 }).map((_, i) => (
-          <svg key={i} width="15" height="15" viewBox="0 0 24 24" fill={B.orange}><path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 7.1-1.01L12 2z" /></svg>
+          <svg key={i} width=”15” height=”15” viewBox=”0 0 24 24” fill={B.orange}><path d=”M12 2l2.9 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 7.1-1.01L12 2z” /></svg>
         ))}
       </div>
-      <blockquote style={{ color: B.white, fontSize: 15, lineHeight: 1.6, fontWeight: 500, margin: "0 0 18px", letterSpacing: "-0.01em" }}>“{t.quote}”</blockquote>
-      <figcaption style={{ display: "flex", alignItems: "center", gap: 11 }}>
-        <Avatar src={t.avatar} name={t.name} />
-        <div>
-          <div style={{ color: B.white, fontSize: 14, fontWeight: 700 }}>{t.name}</div>
-          <div style={{ color: B.dim, fontSize: 12.5 }}>{t.role}</div>
-        </div>
+      <blockquote style={{ color: B.white, fontSize: 15, lineHeight: 1.6, fontWeight: 400, margin: “0 0 18px”, letterSpacing: “-0.01em” }}>”{t.quote}”</blockquote>
+      <figcaption>
+        <div style={{ color: B.white, fontSize: 14, fontWeight: 700 }}>{t.name}</div>
+        <div style={{ color: B.dim, fontSize: 12.5 }}>{t.role}</div>
       </figcaption>
     </figure>
   );
