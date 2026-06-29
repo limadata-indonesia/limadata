@@ -411,356 +411,78 @@ function Nav() {
   );
 }
 
-/* ── Hero chart ──────────────────────────────────────── */
-const HC_DATA   = [1200, 1380, 1290, 1620, 1980, 1850, 2240, 2680, 2510, 3100, 3650, 4200];
-const HC_MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-
-function HeroChart() {
-  const VW = 520, VH = 220;
-  const PL = 48, PR = 16, PT = 16, PB = 34;
-  const CW = VW - PL - PR;
-  const CH = VH - PT - PB;
-  const MIN_V = 900, MAX_V = 4600;
-
-  function px(i) { return PL + (i / (HC_DATA.length - 1)) * CW; }
-  function py(v) { return PT + CH - ((v - MIN_V) / (MAX_V - MIN_V)) * CH; }
-
-  const pts = HC_DATA.map((v, i) => ({ x: px(i), y: py(v) }));
-
-  function smoothPath(points) {
-    let d = `M ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}`;
-    for (let i = 0; i < points.length - 1; i++) {
-      const p0 = points[Math.max(0, i - 1)];
-      const p1 = points[i];
-      const p2 = points[i + 1];
-      const p3 = points[Math.min(points.length - 1, i + 2)];
-      const cp1x = p1.x + (p2.x - p0.x) / 6;
-      const cp1y = p1.y + (p2.y - p0.y) / 6;
-      const cp2x = p2.x - (p3.x - p1.x) / 6;
-      const cp2y = p2.y - (p3.y - p1.y) / 6;
-      d += ` C ${cp1x.toFixed(1)} ${cp1y.toFixed(1)}, ${cp2x.toFixed(1)} ${cp2y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
-    }
-    return d;
-  }
-
-  const linePath  = smoothPath(pts);
-  const last      = pts[pts.length - 1];
-  const areaPath  = `${linePath} L ${last.x.toFixed(1)} ${(PT + CH).toFixed(1)} L ${PL} ${(PT + CH).toFixed(1)} Z`;
-  const yTicks    = [1200, 2000, 3000, 4200];
-
-  return (
-    <m.div
-      initial={{ opacity: 0, x: 40 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.9, delay: 0.35, ease: EASE }}
-      style={{
-        background: "rgba(14,14,14,0.9)",
-        border: `1px solid ${B.border}`,
-        borderRadius: 20,
-        padding: "22px 22px 16px",
-        boxShadow: `0 0 60px rgba(232,96,26,0.07), inset 0 1px 0 rgba(255,255,255,0.05)`,
-      }}
-    >
-      {/* Card header */}
-      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 18 }}>
-        <div>
-          <p style={{ color: B.muted, fontSize: 10, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 5 }}>
-            Organic Traffic
-          </p>
-          <p style={{ color: B.white, fontSize: 24, fontWeight: 800, lineHeight: 1, letterSpacing: "-0.02em" }}>
-            4,200 <span style={{ fontSize: 13, fontWeight: 400, color: B.muted }}>visits / mo</span>
-          </p>
-        </div>
-        <div style={{
-          display: "flex", alignItems: "center", gap: 5,
-          background: "rgba(45,189,90,0.1)", border: "1px solid rgba(45,189,90,0.2)",
-          borderRadius: 20, padding: "5px 11px",
-        }}>
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#2dbd5a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M7 17L17 7M7 7h10v10"/>
-          </svg>
-          <span style={{ color: "#2dbd5a", fontSize: 12, fontWeight: 700 }}>+350% YoY</span>
-        </div>
-      </div>
-
-      {/* SVG chart */}
-      <svg viewBox={`0 0 ${VW} ${VH}`} style={{ width: "100%", display: "block", overflow: "visible" }}>
-        <defs>
-          <linearGradient id="hcArea" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%"   stopColor={B.orange} stopOpacity="0.3"/>
-            <stop offset="100%" stopColor={B.orange} stopOpacity="0"/>
-          </linearGradient>
-          <filter id="hcGlow" x="-20%" y="-40%" width="140%" height="180%">
-            <feGaussianBlur stdDeviation="3" result="blur"/>
-            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-        </defs>
-
-        {/* Grid */}
-        {yTicks.map(v => (
-          <line key={v} x1={PL} y1={py(v)} x2={VW - PR} y2={py(v)}
-            stroke="rgba(255,255,255,0.055)" strokeWidth="1"/>
-        ))}
-
-        {/* Y labels */}
-        {yTicks.map(v => (
-          <text key={v} x={PL - 8} y={py(v) + 4} textAnchor="end"
-            fontSize="9" fill="rgba(255,255,255,0.32)" fontFamily="sans-serif">
-            {v >= 1000 ? `${(v / 1000).toFixed(v % 1000 === 0 ? 0 : 1)}K` : v}
-          </text>
-        ))}
-
-        {/* X labels — every other month */}
-        {HC_MONTHS.map((lbl, i) => i % 2 === 0 && (
-          <text key={lbl} x={px(i)} y={VH - 4} textAnchor="middle"
-            fontSize="9" fill="rgba(255,255,255,0.3)" fontFamily="sans-serif">
-            {lbl}
-          </text>
-        ))}
-
-        {/* Area fill */}
-        <m.path d={areaPath} fill="url(#hcArea)"
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-          transition={{ duration: 1.2, delay: 1.4 }}/>
-
-        {/* Line draw */}
-        <m.path d={linePath} fill="none"
-          stroke={B.orange} strokeWidth="2.5"
-          strokeLinecap="round" strokeLinejoin="round"
-          filter="url(#hcGlow)"
-          initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
-          transition={{ duration: 2.2, delay: 0.5, ease: "easeInOut" }}/>
-
-        {/* End dot */}
-        <m.circle cx={last.x} cy={last.y} r={5} fill={B.orange}
-          filter="url(#hcGlow)"
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-          transition={{ delay: 2.5, duration: 0.3 }}/>
-
-        {/* Pulse rings */}
-        <m.circle cx={last.x} cy={last.y} r={12} fill="none"
-          stroke={B.orange} strokeWidth="1.5"
-          animate={{ opacity: [0.65, 0] }}
-          transition={{ delay: 2.8, duration: 1.6, repeat: Infinity, ease: "easeOut" }}/>
-        <m.circle cx={last.x} cy={last.y} r={20} fill="none"
-          stroke={B.orange} strokeWidth="0.8"
-          animate={{ opacity: [0.35, 0] }}
-          transition={{ delay: 3.0, duration: 1.8, repeat: Infinity, ease: "easeOut" }}/>
-
-        {/* Callout bubble */}
-        <m.g initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-          transition={{ delay: 2.65, duration: 0.4 }}>
-          <rect x={last.x - 46} y={last.y - 42} width={92} height={26} rx={6} fill={B.orange}/>
-          <text x={last.x} y={last.y - 25} textAnchor="middle"
-            fontSize="11" fontWeight="700" fill="white" fontFamily="sans-serif">
-            4,200 / mo
-          </text>
-          <polygon
-            points={`${last.x - 6},${last.y - 16} ${last.x + 6},${last.y - 16} ${last.x},${last.y - 8}`}
-            fill={B.orange}/>
-        </m.g>
-      </svg>
-
-      {/* Bottom stats */}
-      <div style={{ display: "flex", marginTop: 14, paddingTop: 14, borderTop: `1px solid ${B.border}` }}>
-        {[
-          { label: "Baseline",    val: "1,200/mo" },
-          { label: "After 12 mo", val: "4,200/mo" },
-          { label: "Avg MoM",     val: "+14.8%"   },
-        ].map(({ label, val }) => (
-          <div key={label} style={{ flex: 1, textAlign: "center" }}>
-            <p style={{ color: B.white, fontSize: 13, fontWeight: 700, lineHeight: 1 }}>{val}</p>
-            <p style={{ color: B.muted, fontSize: 10, marginTop: 4 }}>{label}</p>
-          </div>
-        ))}
-      </div>
-    </m.div>
-  );
-}
-
-/* ── Hero ─────────────────────────────────────────────── */
-const HERO_STATS = [
-  { val: "+340%", label: "Organic Growth",   sub: "Tokopedia" },
-  { val: "+180%", label: "AI Visibility",    sub: "Traveloka" },
-  { val: "+425%", label: "Traffic Increase", sub: "Kopi Kenangan" },
-];
-
-const HERO_AVATARS = [
-  { abbr: "TK", bg: "linear-gradient(135deg,#1d6e36,#0a3018)" },
-  { abbr: "TV", bg: "linear-gradient(135deg,#0068c9,#003060)" },
-  { abbr: "GJ", bg: "linear-gradient(135deg,#2db55d,#0e4424)" },
-  { abbr: "HD", bg: "linear-gradient(135deg,#006e3c,#002a18)" },
-];
-
+/* ── Hero (fullscreen video background) ───────────────── */
 function Hero() {
   return (
-    <section
-      id="results"
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        position: "relative",
-        background: B.dark,
-        overflow: "hidden",
-      }}
-    >
+    <section id="results" className="relative h-screen w-full overflow-hidden" style={{ background: B.dark }}>
       <style>{`
-        @media (max-width: 767px) {
-          #hero-inner {
-            flex-direction: column !important;
-            align-items: flex-start !important;
-            padding-top: 100px !important;
-            padding-bottom: 60px !important;
-            gap: 36px !important;
-          }
-          #hero-copy  { width: 100% !important; }
-          #hero-chart { width: 100% !important; }
+        @keyframes fadeSlideUp {
+          from { opacity: 0; transform: translateY(24px); }
+          to   { opacity: 1; transform: translateY(0); }
         }
       `}</style>
 
-      {/* ── Backgrounds ── */}
-      <div aria-hidden="true" style={{
-        position: "absolute", inset: 0, pointerEvents: "none",
-        background: "radial-gradient(ellipse 70% 60% at 62% 50%, rgba(232,96,26,0.055) 0%, transparent 68%)",
-      }}/>
-      <div aria-hidden="true" style={{
-        position: "absolute", inset: 0, pointerEvents: "none",
-        background: "radial-gradient(ellipse 48% 52% at 4% 98%, rgba(200,65,8,0.3) 0%, transparent 62%)",
-      }}/>
-      {/* Dot grid */}
-      <div aria-hidden="true" style={{
-        position: "absolute", inset: 0, pointerEvents: "none", opacity: 0.04,
-        backgroundImage: "radial-gradient(rgba(255,255,255,0.9) 1px, transparent 1px)",
-        backgroundSize: "32px 32px",
-      }}/>
-
-      {/* ── Content row ── */}
-      <div
-        id="hero-inner"
-        style={{
-          position: "relative", zIndex: 2,
-          width: "100%",
-          maxWidth: 1200,
-          margin: "0 auto",
-          padding: "80px 48px",
-          display: "flex",
-          alignItems: "center",
-          gap: 80,
-        }}
+      {/* ── Background video (behind everything) ── */}
+      <video
+        autoPlay muted loop playsInline
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover"
+        style={{ objectPosition: "70% center" }}
       >
-        {/* ── Left copy ── */}
-        <div id="hero-copy" style={{ flex: "0 0 auto", width: "min(480px, 46%)" }}>
-          <m.p
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: EASE }}
-            style={{ color: B.orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", marginBottom: 22 }}
-          >
-            Rank. Grow. Dominate.
-          </m.p>
+        <source
+          src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260622_204221_5339e40b-e73d-4ab0-9c65-79c18c66fd50.mp4"
+          type="video/mp4"
+        />
+      </video>
 
-          <m.h1
-            initial={{ opacity: 0, y: 36, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 1.1, delay: 0.1, ease: EASE }}
-            style={{ color: B.white, fontSize: "clamp(2.2rem, 4.2vw, 3.8rem)", fontWeight: 800, lineHeight: 1.08, letterSpacing: "-0.025em", marginBottom: 22 }}
-          >
-            Indonesia's #1<br />
-            SEO &amp; GEO<br />
-            <em style={{ color: B.orange, fontStyle: "italic", fontWeight: 800 }}>Agency.</em>
-          </m.h1>
+      {/* ── Legibility + brand overlays ── */}
+      <div aria-hidden="true" className="absolute inset-0" style={{
+        background: "linear-gradient(180deg, rgba(8,8,8,0.55) 0%, rgba(8,8,8,0.12) 32%, rgba(8,8,8,0.32) 68%, rgba(8,8,8,0.88) 100%)",
+      }} />
+      <div aria-hidden="true" className="absolute inset-0" style={{
+        pointerEvents: "none",
+        background: "radial-gradient(ellipse 55% 80% at 0% 100%, rgba(232,96,26,0.3) 0%, transparent 60%)",
+      }} />
 
-          <m.p
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.28, ease: EASE }}
-            style={{ color: B.dim, fontSize: 15, lineHeight: 1.72, marginBottom: 36, maxWidth: 390 }}
-          >
-            Limadata helps Indonesian businesses rank higher on Google, appear in AI Overviews,
-            ChatGPT &amp; Gemini — and turn organic traffic into loyal customers.
-          </m.p>
+      {/* ── Hero content ── */}
+      <div className="relative z-10 flex h-full flex-col justify-between px-6 pb-12 pt-28 sm:pb-16 sm:pt-32 md:px-16 md:pb-20 md:pt-36 lg:px-24">
 
-          <m.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.42, ease: EASE }}
-            style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 44, flexWrap: "wrap" }}
+        {/* Top */}
+        <div className="max-w-3xl">
+          <div className="mb-4 sm:mb-6 inline-flex items-center gap-2" style={{ animation: "fadeSlideUp 0.8s ease 0.2s both" }}>
+            <span style={{ width: 7, height: 7, borderRadius: "50%", background: B.orange, boxShadow: `0 0 12px ${B.glow}` }} />
+            <span className="text-xs sm:text-sm" style={{ color: "rgba(255,255,255,0.9)", letterSpacing: "0.08em", textTransform: "uppercase", fontWeight: 600 }}>
+              SEO &amp; GEO Agency · Indonesia
+            </span>
+          </div>
+          <h1
+            className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.1] tracking-tight text-white"
+            style={{ animation: "fadeSlideUp 0.8s ease 0.4s both" }}
           >
-            <a
-              href="#cta"
-              style={{
-                display: "inline-flex", alignItems: "center", gap: 9,
-                background: B.orange, color: B.white,
-                fontWeight: 700, fontSize: 14,
-                padding: "13px 26px", borderRadius: 999,
-                textDecoration: "none",
-                boxShadow: `0 0 42px rgba(232,96,26,0.45)`,
-                transition: "opacity 0.18s, transform 0.18s",
-              }}
-              onMouseEnter={e => { e.currentTarget.style.opacity = "0.88"; e.currentTarget.style.transform = "scale(1.04)"; }}
-              onMouseLeave={e => { e.currentTarget.style.opacity = "1";    e.currentTarget.style.transform = "scale(1)"; }}
-            >
-              Get a Free Audit
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </a>
-
-            <a
-              href="#case-studies"
-              style={{
-                display: "inline-flex", alignItems: "center", gap: 10,
-                color: B.dim, fontWeight: 600, fontSize: 14,
-                textDecoration: "none", transition: "color 0.18s",
-              }}
-              onMouseEnter={e => e.currentTarget.style.color = B.white}
-              onMouseLeave={e => e.currentTarget.style.color = B.dim}
-            >
-              <span style={{
-                width: 38, height: 38, borderRadius: "50%",
-                border: `1px solid rgba(255,255,255,0.18)`,
-                display: "inline-flex", alignItems: "center", justifyContent: "center",
-                fontSize: 11, transition: "border-color 0.18s",
-              }}>▶</span>
-              View Case Studies
-            </a>
-          </m.div>
-
-          <m.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.58, ease: EASE }}
-            style={{ display: "flex", alignItems: "center", gap: 14 }}
-          >
-            <div style={{ display: "flex" }}>
-              {HERO_AVATARS.map(({ abbr, bg }, i) => (
-                <div key={abbr} style={{
-                  width: 34, height: 34, borderRadius: "50%",
-                  background: bg, border: "2px solid #080808",
-                  marginLeft: i > 0 ? -10 : 0,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.85)",
-                  position: "relative", zIndex: 4 - i,
-                }}>
-                  {abbr}
-                </div>
-              ))}
-            </div>
-            <div>
-              <p style={{ color: B.white, fontSize: 13, fontWeight: 600, lineHeight: 1.35 }}>
-                Trusted by 50+ Indonesian brands
-              </p>
-              <p style={{ color: B.muted, fontSize: 11, marginTop: 2 }}>
-                Tokopedia, Traveloka, Halodoc &amp; more
-              </p>
-            </div>
-          </m.div>
+            Ranking Indonesian brands<br />
+            #1 on Google —<br />
+            and inside AI search.
+          </h1>
         </div>
 
-        {/* ── Right chart ── */}
-        <div id="hero-chart" style={{ flex: 1, minWidth: 0 }}>
-          <HeroChart />
+        {/* Bottom */}
+        <div>
+          <p
+            className="text-sm sm:text-base md:text-lg leading-relaxed max-w-sm sm:max-w-lg mb-5 sm:mb-6"
+            style={{ color: "rgba(255,255,255,0.65)", animation: "fadeSlideUp 0.8s ease 0.7s both" }}
+          >
+            We turn search visibility into revenue — from Google rankings to AI Overviews, ChatGPT, and Gemini.
+          </p>
+          <a
+            href="#cta"
+            className="inline-flex items-center gap-2 rounded-lg px-5 py-2.5 sm:px-6 sm:py-3 text-sm font-medium transition-transform hover:scale-105"
+            style={{ background: B.white, color: "#000", animation: "fadeSlideUp 0.8s ease 0.9s both" }}
+          >
+            Get a Free Audit
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </a>
         </div>
       </div>
     </section>
@@ -1285,6 +1007,119 @@ function SocialProof() {
               </span>
             </div>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Testimonials (marquee wall) ──────────────────────── */
+const TESTIMONIALS = [
+  { quote: "Limadata took us from page three to the top of Google for our most competitive keywords. Organic leads tripled in five months.", name: "Andini Pratama", role: "Head of Growth, Tokopedia Seller Hub", avatar: "https://i.pravatar.cc/120?img=47", image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=640&q=80" },
+  { quote: "Transparent reporting, clear strategy, and they actually hit their targets. Six months in and our organic traffic is up 280%.", name: "Budi Santoso", role: "CEO, Kopi Kenangan", avatar: "https://i.pravatar.cc/120?img=12" },
+  { quote: "The technical SEO audit alone paid for the whole engagement. Our indexing rate jumped within weeks of the fixes going live.", name: "Sari Wijaya", role: "VP Digital, BCA Digital", avatar: "https://i.pravatar.cc/120?img=32" },
+  { quote: "We finally show up in AI Overviews and ChatGPT answers for our category. No other agency in Indonesia was even talking about GEO.", name: "Rizky Hamdani", role: "Marketing Director, Traveloka", avatar: "https://i.pravatar.cc/120?img=68" },
+  { quote: "A genuine partner, not a vendor. They explain the why behind every recommendation and the results speak for themselves.", name: "Maya Lestari", role: "Founder, Blibli Studio", avatar: "https://i.pravatar.cc/120?img=45", image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=640&q=80" },
+  { quote: "Content strategy, link building, and on-page all handled in one place. Our domain authority climbed from 22 to 41 in under a year.", name: "Dimas Aryo", role: "Growth Lead, OVO", avatar: "https://i.pravatar.cc/120?img=14" },
+  { quote: "The dashboards make it effortless to show the board exactly where our traffic and revenue are coming from. Best SEO partner we've had.", name: "Putri Anggraini", role: "CMO, DANA", avatar: "https://i.pravatar.cc/120?img=23" },
+  { quote: "They rebuilt our site architecture and Core Web Vitals scores went green across the board. Rankings followed within a month.", name: "Fajar Nugroho", role: "CTO, Bukalapak", avatar: "https://i.pravatar.cc/120?img=51" },
+  { quote: "From keyword research to AI search visibility, Limadata covers the full picture. Our cost per lead dropped by half.", name: "Intan Permata", role: "Head of Marketing, Gojek", avatar: "https://i.pravatar.cc/120?img=20", image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=640&q=80" },
+];
+
+function Avatar({ src, name, size = 42 }) {
+  return (
+    <img src={src} alt={name} width={size} height={size}
+      loading="lazy"
+      style={{ width: size, height: size, borderRadius: "50%", objectFit: "cover", flexShrink: 0, background: B.card, border: `1px solid ${B.border}` }} />
+  );
+}
+
+function TCard({ t }) {
+  if (t.image) {
+    /* Image card — backdrop-blur glass overlay + gradient darkening */
+    return (
+      <figure style={{ position: "relative", borderRadius: 18, overflow: "hidden", border: `1px solid ${B.border}`, minHeight: 280, display: "flex", alignItems: "flex-end", margin: 0,
+        backgroundImage: `url(${t.image})`, backgroundSize: "cover", backgroundPosition: "center" }}>
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(8,8,8,0.15) 0%, rgba(8,8,8,0.55) 55%, rgba(8,8,8,0.9) 100%)" }} />
+        <div style={{ position: "relative", margin: 14, padding: 18, borderRadius: 14, width: "calc(100% - 28px)",
+          background: "rgba(20,20,20,0.45)", border: "1px solid rgba(255,255,255,0.12)", backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)" }}>
+          <blockquote style={{ color: B.white, fontSize: 15, lineHeight: 1.5, fontWeight: 500, margin: "0 0 14px" }}>“{t.quote}”</blockquote>
+          <figcaption style={{ display: "flex", alignItems: "center", gap: 11 }}>
+            <Avatar src={t.avatar} name={t.name} size={40} />
+            <div>
+              <div style={{ color: B.white, fontSize: 14, fontWeight: 700 }}>{t.name}</div>
+              <div style={{ color: "rgba(255,255,255,0.7)", fontSize: 12.5 }}>{t.role}</div>
+            </div>
+          </figcaption>
+        </div>
+      </figure>
+    );
+  }
+  /* Text card — clean */
+  return (
+    <figure style={{ background: B.card, border: `1px solid ${B.border}`, borderRadius: 18, padding: 24, margin: 0 }}>
+      <div aria-hidden="true" style={{ display: "flex", gap: 3, marginBottom: 14 }}>
+        {Array.from({ length: 5 }).map((_, i) => (
+          <svg key={i} width="15" height="15" viewBox="0 0 24 24" fill={B.orange}><path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 7.1-1.01L12 2z" /></svg>
+        ))}
+      </div>
+      <blockquote style={{ color: B.white, fontSize: 15, lineHeight: 1.6, fontWeight: 500, margin: "0 0 18px", letterSpacing: "-0.01em" }}>“{t.quote}”</blockquote>
+      <figcaption style={{ display: "flex", alignItems: "center", gap: 11 }}>
+        <Avatar src={t.avatar} name={t.name} />
+        <div>
+          <div style={{ color: B.white, fontSize: 14, fontWeight: 700 }}>{t.name}</div>
+          <div style={{ color: B.dim, fontSize: 12.5 }}>{t.role}</div>
+        </div>
+      </figcaption>
+    </figure>
+  );
+}
+
+/* up / down per column → "alternate" direction */
+const T_COLUMNS = [
+  { items: [0, 3, 6], dir: "up",   dur: 34 },
+  { items: [1, 4, 7], dir: "down", dur: 42 },
+  { items: [2, 5, 8], dir: "up",   dur: 38 },
+];
+
+function Testimonials() {
+  return (
+    <section id="testimonials" style={{ background: B.dark, padding: "96px 0", position: "relative", overflow: "hidden" }}>
+      <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(to right, transparent, ${B.borderO}, transparent)` }} />
+      <style>{`
+        @keyframes tcol-up   { from { transform: translateY(0); }      to { transform: translateY(-50%); } }
+        @keyframes tcol-down { from { transform: translateY(-50%); }   to { transform: translateY(0); } }
+        .twall:hover .tcol-track { animation-play-state: paused; }
+        .tcol-track { display: flex; flex-direction: column; gap: 18px; will-change: transform; }
+        .twall { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+        @media (max-width: 900px) { .twall { grid-template-columns: repeat(2, 1fr); } .tcol-3 { display: none; } }
+        @media (max-width: 600px) { .twall { grid-template-columns: 1fr; } .tcol-2 { display: none; } }
+      `}</style>
+
+      {/* Header */}
+      <div style={{ maxWidth: 1100, margin: "0 auto 48px", padding: "0 24px", textAlign: "center" }}>
+        <m.div {...reveal()}>
+          <p style={{ color: B.orange, fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", margin: "0 0 10px" }}>Testimonials</p>
+          <h2 style={{ color: B.white, fontWeight: 800, fontSize: "clamp(1.6rem, 2.8vw, 2.2rem)", lineHeight: 1.15, margin: 0 }}>Loved by teams across Indonesia</h2>
+        </m.div>
+      </div>
+
+      {/* Marquee wall */}
+      <div style={{ position: "relative", maxWidth: 1100, margin: "0 auto", padding: "0 24px", height: 620, overflow: "hidden",
+        WebkitMaskImage: "linear-gradient(to bottom, transparent 0, #000 110px, #000 calc(100% - 110px), transparent 100%)",
+        maskImage: "linear-gradient(to bottom, transparent 0, #000 110px, #000 calc(100% - 110px), transparent 100%)" }}>
+        <div className="twall">
+          {T_COLUMNS.map((col, ci) => {
+            const cards = col.items.map((idx) => TESTIMONIALS[idx]);
+            const loop = [...cards, ...cards];
+            return (
+              <div key={ci} className={`tcol-${ci + 1}`} style={{ overflow: "hidden" }}>
+                <div className="tcol-track" style={{ animation: `tcol-${col.dir} ${col.dur}s linear infinite` }}>
+                  {loop.map((t, i) => <TCard key={i} t={t} />)}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -1882,6 +1717,7 @@ export default function LimadataPage({ articles: rawArticles = [], caseStudies: 
         <SocialProof />
         <Services />
         <CaseStudies cases={CASES} />
+        <Testimonials />
         <Articles articles={ARTICLES} />
         <FAQ />
         <CTA />
