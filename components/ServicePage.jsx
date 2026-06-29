@@ -308,7 +308,7 @@ function Footer() {
         style={{ borderTop: `1px solid ${B.border}`, display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12, maxWidth: 1200, margin: "0 auto" }}
       >
         <p style={{ color: B.muted, fontSize: 12 }}>© {year} Limadata. All rights reserved.</p>
-        <p style={{ color: B.muted, fontSize: 12 }}>PT Lima Data Digital — Jakarta, Indonesia</p>
+        <p style={{ color: B.muted, fontSize: 12 }}>Limadata — Jakarta, Indonesia</p>
       </div>
     </footer>
   );

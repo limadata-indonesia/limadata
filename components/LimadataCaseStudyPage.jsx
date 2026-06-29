@@ -384,7 +384,7 @@ export default function CaseStudyPage({ cs }) {
           />
         </Link>
         <p style={{ color: B.muted, fontSize: 12 }}>
-          © {new Date().getFullYear()} PT Lima Data Digital. All rights reserved.
+          © {new Date().getFullYear()} Limadata. All rights reserved.
         </p>
       </footer>
 

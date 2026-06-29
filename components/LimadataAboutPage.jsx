@@ -334,7 +334,7 @@ export default function AboutPage({ about }) {
         <Link href="/">
           <img src="/logo-limadata.png" alt="Limadata" style={{ height: 22, filter: "brightness(0) invert(1)", opacity: 0.5 }} />
         </Link>
-        <p style={{ color: B.muted, fontSize: 12 }}>© {new Date().getFullYear()} PT Lima Data Digital. All rights reserved.</p>
+        <p style={{ color: B.muted, fontSize: 12 }}>© {new Date().getFullYear()} Limadata. All rights reserved.</p>
       </footer>
 
     </div>

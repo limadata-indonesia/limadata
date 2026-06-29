@@ -1680,7 +1680,7 @@ function Footer() {
         }}
       >
         <p style={{ color: B.muted, fontSize: 12 }}>
-          © {year} Limadata · PT Lima Data Digital · All rights reserved
+          © {year} Limadata · All rights reserved
         </p>
         <div style={{ display: "flex", gap: 20 }}>
           {[
