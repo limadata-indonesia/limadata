@@ -1030,12 +1030,12 @@ const TESTIMONIALS = [
 function TCard({ t }) {
   return (
     <figure style={{ background: B.card, border: `1px solid ${B.border}`, borderRadius: 18, padding: 24, margin: 0 }}>
-      <div aria-hidden=”true” style={{ display: “flex”, gap: 3, marginBottom: 14 }}>
+      <div aria-hidden="true" style={{ display: "flex", gap: 3, marginBottom: 14 }}>
         {Array.from({ length: 5 }).map((_, i) => (
-          <svg key={i} width=”15” height=”15” viewBox=”0 0 24 24” fill={B.orange}><path d=”M12 2l2.9 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 7.1-1.01L12 2z” /></svg>
+          <svg key={i} width="15" height="15" viewBox="0 0 24 24" fill={B.orange}><path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 7.1-1.01L12 2z" /></svg>
         ))}
       </div>
-      <blockquote style={{ color: B.white, fontSize: 15, lineHeight: 1.6, fontWeight: 400, margin: “0 0 18px”, letterSpacing: “-0.01em” }}>”{t.quote}”</blockquote>
+      <blockquote style={{ color: B.white, fontSize: 15, lineHeight: 1.6, fontWeight: 400, margin: "0 0 18px", letterSpacing: "-0.01em" }}>"{t.quote}"</blockquote>
       <figcaption>
         <div style={{ color: B.white, fontSize: 14, fontWeight: 700 }}>{t.name}</div>
         <div style={{ color: B.dim, fontSize: 12.5 }}>{t.role}</div>
