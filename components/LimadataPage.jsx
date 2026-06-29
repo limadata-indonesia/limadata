@@ -312,9 +312,9 @@ function Nav() {
             {/* Columns */}
             <div
               style={{
-                maxWidth: 1152,
+                maxWidth: 1400,
                 margin: "0 auto",
-                padding: "40px max(24px, calc((100vw - 1152px) / 2)) 32px",
+                padding: "40px max(24px, calc((100vw - 1400px) / 2)) 32px",
                 display: "grid",
                 gridTemplateColumns: "0.85fr 1fr 1fr",
                 gap: "0 0",
@@ -357,7 +357,7 @@ function Nav() {
                         <p className="mt" style={{ color: B.white, fontSize: 15, fontWeight: 700, marginBottom: 6, lineHeight: 1.3, transition: "color 0.15s" }}>
                           {title}
                         </p>
-                        <p style={{ color: B.muted, fontSize: 12, lineHeight: 1.65, maxWidth: 240 }}>{body}</p>
+                        <p style={{ color: B.muted, fontSize: 12, lineHeight: 1.65, maxWidth: 300 }}>{body}</p>
                       </a>
                     ))}
                   </div>
@@ -382,7 +382,7 @@ function Nav() {
             </div>
 
             {/* Bottom divider + See All Services CTA */}
-            <div style={{ borderTop: `1px solid ${B.border}`, padding: "20px max(24px, calc((100vw - 1152px) / 2))", display: "flex", justifyContent: "center" }}>
+            <div style={{ borderTop: `1px solid ${B.border}`, padding: "20px max(24px, calc((100vw - 1400px) / 2))", display: "flex", justifyContent: "center" }}>
               <a
                 href="#services"
                 onClick={() => setMegaOpen(false)}
