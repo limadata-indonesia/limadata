@@ -456,7 +456,7 @@ function Hero() {
             </span>
           </div>
           <h1
-            className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.1] tracking-tight text-white"
+            className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-medium leading-[1.15] tracking-tight text-white"
             style={{ animation: "fadeSlideUp 0.8s ease 0.4s both" }}
           >
             Ranking Indonesian brands<br />
