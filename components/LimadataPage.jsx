@@ -16,7 +16,7 @@ const B = {
   card:     "#141414",
   border:   "rgba(255,255,255,0.07)",
   borderO:  "rgba(232,96,26,0.3)",
-  muted:    "rgba(255,255,255,0.38)",
+  muted:    "rgba(255,255,255,0.52)",
   dim:      "rgba(255,255,255,0.62)",
   white:    "#FFFFFF",
   glow:     "rgba(232,96,26,0.35)",
@@ -357,7 +357,7 @@ function Nav() {
                         <p className="mt" style={{ color: B.white, fontSize: 15, fontWeight: 700, marginBottom: 6, lineHeight: 1.3, transition: "color 0.15s" }}>
                           {title}
                         </p>
-                        <p style={{ color: B.muted, fontSize: 12, lineHeight: 1.65, maxWidth: 300 }}>{body}</p>
+                        <p style={{ color: B.muted, fontSize: 13, lineHeight: 1.65, maxWidth: 300 }}>{body}</p>
                       </a>
                     ))}
                   </div>
@@ -414,7 +414,7 @@ function Nav() {
 /* ── Hero (fullscreen video background) ───────────────── */
 function Hero() {
   return (
-    <section id="results" className="relative h-screen w-full overflow-hidden" style={{ background: B.dark }}>
+    <section id="results" className="relative min-h-[100dvh] w-full overflow-hidden" style={{ background: B.dark }}>
       <style>{`
         @keyframes fadeSlideUp {
           from { opacity: 0; transform: translateY(24px); }
@@ -426,6 +426,7 @@ function Hero() {
       <video
         autoPlay muted loop playsInline
         aria-hidden="true"
+        poster="/hero-poster.jpg"
         className="absolute inset-0 h-full w-full object-cover"
         style={{ objectPosition: "70% center" }}
       >
@@ -476,7 +477,7 @@ function Hero() {
           <a
             href="#cta"
             className="inline-flex items-center gap-2 rounded-lg px-5 py-2.5 sm:px-6 sm:py-3 text-sm font-medium transition-transform hover:scale-105"
-            style={{ background: B.white, color: "#000", animation: "fadeSlideUp 0.8s ease 0.9s both" }}
+            style={{ background: B.orange, color: B.white, animation: "fadeSlideUp 0.8s ease 0.9s both", boxShadow: `0 0 28px rgba(232,96,26,0.45)` }}
           >
             Get a Free Audit
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -605,7 +606,7 @@ function Services() {
                         onMouseLeave={e => e.currentTarget.querySelector("p").style.color = B.white}
                       >
                         <p style={{ color: B.white, fontSize: 14, fontWeight: 700, marginBottom: 4, transition: "color 0.18s" }}>{name}</p>
-                        <p style={{ color: B.muted, fontSize: 12, lineHeight: 1.6 }}>{desc}</p>
+                        <p style={{ color: B.muted, fontSize: 13, lineHeight: 1.6 }}>{desc}</p>
                       </a>
                     ))
                 }
@@ -634,6 +635,142 @@ function Services() {
 }
 
 /* ── How it works ─────────────────────────────────────── */
+const HOW_STEPS = [
+  {
+    number: "01",
+    title: "Free Audit",
+    description: "We analyse your Google rankings, site health, Core Web Vitals, and AI search presence — then deliver a prioritised action report within 48 hours, free of charge.",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+    ),
+  },
+  {
+    number: "02",
+    title: "Strategy & Roadmap",
+    description: "We build a data-driven roadmap tailored to your industry and competition in Indonesia — covering SEO, GEO, content, and technical fixes with clear timelines.",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+      </svg>
+    ),
+  },
+  {
+    number: "03",
+    title: "Execution & Growth",
+    description: "Our team executes every element — content, links, technical SEO, AI citation building — while you track progress through live dashboards updated weekly.",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+      </svg>
+    ),
+  },
+];
+
+function HowItWorks() {
+  return (
+    <section id="how-it-works" className="py-28 px-6 md:px-16 lg:px-24 relative" style={{ background: B.dark }}>
+      <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(to right, transparent, ${B.borderO}, transparent)` }} />
+
+      <m.div {...reveal()} className="text-center mb-16">
+        <p className="text-xs uppercase tracking-[0.2em] mb-4 font-semibold" style={{ color: B.orange }}>
+          How it works
+        </p>
+        <h2 className="font-medium leading-tight" style={{ color: B.white, fontSize: "clamp(1.35rem, 2.6vw, 1.9rem)" }}>
+          From audit to results{" "}
+          <span style={{ color: B.muted }}>in three steps</span>
+        </h2>
+      </m.div>
+
+      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+        {/* Connector line — desktop only */}
+        <div aria-hidden="true" className="hidden md:block absolute top-10 left-[calc(16.66%+16px)] right-[calc(16.66%+16px)]" style={{ height: 1, background: `linear-gradient(to right, ${B.borderO}, ${B.borderO})`, top: 36 }} />
+
+        {HOW_STEPS.map(({ number, title, description, icon }, i) => (
+          <m.div key={number} {...reveal(i * 0.12)} className="flex flex-col items-center text-center gap-5">
+            {/* Step circle */}
+            <div style={{ position: "relative" }}>
+              <div style={{
+                width: 72, height: 72, borderRadius: "50%",
+                background: B.card,
+                border: `1px solid ${B.borderO}`,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                color: B.orange,
+                boxShadow: `0 0 32px rgba(232,96,26,0.12)`,
+              }}>
+                {icon}
+              </div>
+              <span style={{
+                position: "absolute", top: -8, right: -8,
+                width: 22, height: 22, borderRadius: "50%",
+                background: B.orange,
+                fontSize: 10, fontWeight: 800, color: B.white,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                letterSpacing: "-0.02em",
+              }}>
+                {i + 1}
+              </span>
+            </div>
+
+            <div>
+              <h3 className="font-bold text-base mb-3" style={{ color: B.white }}>{title}</h3>
+              <p style={{ color: B.muted, fontSize: 14, lineHeight: 1.7 }}>{description}</p>
+            </div>
+          </m.div>
+        ))}
+      </div>
+
+      <m.div {...reveal(0.36)} className="text-center mt-14">
+        <a
+          href="#cta"
+          className="inline-flex items-center gap-2 font-semibold px-8 py-3.5 rounded-full text-sm transition-all duration-200 hover:scale-105"
+          style={{ background: B.orange, color: B.white, boxShadow: `0 0 32px rgba(232,96,26,0.35)` }}
+        >
+          Start with a free audit
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+          </svg>
+        </a>
+      </m.div>
+    </section>
+  );
+}
+
+/* ── Floating WhatsApp button ──────────────────────────── */
+function WhatsAppFloat() {
+  return (
+    <a
+      href="https://wa.me/6281234567890?text=Hi%20Limadata%2C%20I%27d%20like%20to%20learn%20more%20about%20your%20SEO%20%26%20GEO%20services."
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Chat with Limadata on WhatsApp"
+      style={{
+        position: "fixed",
+        bottom: 28,
+        right: 28,
+        zIndex: 60,
+        width: 52,
+        height: 52,
+        borderRadius: "50%",
+        background: "#25D366",
+        color: "#fff",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        boxShadow: "0 4px 24px rgba(37,211,102,0.45)",
+        transition: "transform 0.2s, box-shadow 0.2s",
+      }}
+      onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.1)"; e.currentTarget.style.boxShadow = "0 6px 32px rgba(37,211,102,0.6)"; }}
+      onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)";   e.currentTarget.style.boxShadow = "0 4px 24px rgba(37,211,102,0.45)"; }}
+    >
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+      </svg>
+    </a>
+  );
+}
+
 /* ── Case Studies (injected as props from server) ─────── */
 
 function CaseStudies({ cases }) {
@@ -1240,7 +1377,7 @@ function Articles({ articles: ARTICLES }) {
 
                   {/* Excerpt — 3 lines max */}
                   <p style={{
-                    color: B.muted, fontSize: 12, lineHeight: 1.72, margin: 0, flex: 1,
+                    color: B.muted, fontSize: 13, lineHeight: 1.72, margin: 0, flex: 1,
                     display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden",
                   }}>
                     {excerpt}
@@ -1384,13 +1521,16 @@ function CTA() {
             Request Free Audit
           </a>
           <a
-            href="https://limadata.co.id"
+            href="https://wa.me/6281234567890?text=Hi%20Limadata%2C%20I%27d%20like%20to%20learn%20more%20about%20your%20SEO%20%26%20GEO%20services."
             target="_blank"
             rel="noopener noreferrer"
-            className="font-semibold px-10 py-4 rounded-full text-sm transition-all duration-200 hover:border-white/25"
+            className="font-semibold px-10 py-4 rounded-full text-sm transition-all duration-200 hover:border-white/25 inline-flex items-center gap-2"
             style={{ border: `1px solid ${B.border}`, color: B.dim }}
           >
-            Visit limadata.co.id
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+            </svg>
+            Chat on WhatsApp
           </a>
         </m.div>
       </div>
@@ -1685,12 +1825,14 @@ export default function LimadataPage({ articles: rawArticles = [], caseStudies: 
         <Hero />
         <SocialProof />
         <Services />
+        <HowItWorks />
         <CaseStudies cases={CASES} />
         <Testimonials />
         <Articles articles={ARTICLES} />
         <FAQ />
         <CTA />
         <Footer />
+        <WhatsAppFloat />
       </div>
     </LazyMotion>
   );
