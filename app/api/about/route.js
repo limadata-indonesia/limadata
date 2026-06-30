@@ -1,12 +1,23 @@
 import { createClient } from "../../../lib/supabase-server";
 import { NextResponse } from "next/server";
 
+const ABOUT_PUBLIC_FIELDS = "hero_tagline, hero_title, hero_description, mission, vision, values, team, content_html";
+
+const ABOUT_WRITE_FIELDS = [
+  "hero_tagline", "hero_title", "hero_description",
+  "mission", "vision", "values", "team", "content_html",
+];
+
+function pick(body, fields) {
+  return Object.fromEntries(fields.filter(k => k in body).map(k => [k, body[k]]));
+}
+
 export async function GET() {
   try {
     const supabase = createClient();
     const { data } = await supabase
       .from("about_page")
-      .select("*")
+      .select(ABOUT_PUBLIC_FIELDS)
       .eq("id", 1)
       .single();
     return NextResponse.json(data ?? {});
@@ -23,7 +34,7 @@ export async function PUT(request) {
   const body = await request.json();
   const { data, error } = await supabase
     .from("about_page")
-    .upsert({ ...body, id: 1, updated_at: new Date().toISOString() })
+    .upsert({ ...pick(body, ABOUT_WRITE_FIELDS), id: 1, updated_at: new Date().toISOString() })
     .select()
     .single();
 

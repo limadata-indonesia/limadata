@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
+import { sanitizeContent } from "../lib/sanitize";
 import Link from "next/link";
 
 const B = {
@@ -288,7 +289,7 @@ export default function AboutPage({ about }) {
           <motion.div {...rev(0.1)}>
             <div
               className="article-html"
-              dangerouslySetInnerHTML={{ __html: about.content_html }}
+              dangerouslySetInnerHTML={{ __html: sanitizeContent(about.content_html) }}
               style={{ color: B.dim, fontSize: 17, lineHeight: 1.85 }}
             />
           </motion.div>

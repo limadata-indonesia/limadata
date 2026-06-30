@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
+import { sanitizeContent } from "../lib/sanitize";
 import Link from "next/link";
 
 const B = {
@@ -314,7 +315,7 @@ export default function ArticlePage({ article }) {
           {article.content_html
             ? <div
                 className="article-html"
-                dangerouslySetInnerHTML={{ __html: article.content_html }}
+                dangerouslySetInnerHTML={{ __html: sanitizeContent(article.content_html) }}
                 style={{ color: B.dim, fontSize: 17, lineHeight: 1.85 }}
               />
             : article.content?.map((block, i) => (
