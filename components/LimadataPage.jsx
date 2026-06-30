@@ -825,7 +825,7 @@ function CaseStudies({ cases }) {
                   <div style={{ display:"flex", gap:20, alignItems:"flex-start" }}>
                     <div>
                       <p style={{ color: dot, fontWeight: 800, fontSize: 22, lineHeight: 1 }}>{change}</p>
-                      <p style={{ color: B.muted, fontSize: 10, marginTop: 3, textTransform:"uppercase", letterSpacing:"0.06em" }}>Organic Growth</p>
+                      <p style={{ color: B.muted, fontSize: 10, marginTop: 3, textTransform:"uppercase", letterSpacing:"0.06em" }}>Key Result</p>
                     </div>
                     <div>
                       <p style={{ color: B.white, fontWeight: 600, fontSize: 12, lineHeight: 1.3 }}>{service}</p>
