@@ -1,0 +1,39 @@
+language: "en-US"
+
+tone_instructions: >
+  Use an educational tone. Explain the *why* behind every suggestion, not just
+  the what. Help developers understand the underlying principle or best practice
+  so they learn from each review, not just fix the immediate issue.
+
+reviews:
+  high_level_summary: true
+  review_status: true
+  collapse_walkthrough: false
+  auto_review:
+    enabled: true
+    drafts: false
+  path_instructions:
+    - path: "**/*.{js,jsx,ts,tsx}"
+      instructions: >
+        Focus on: Next.js 14 App Router best practices (server vs client
+        components, data fetching patterns, caching), React best practices
+        (hooks rules, memoization, avoiding unnecessary re-renders), security
+        (XSS, injection, exposed secrets or API keys, unsafe use of
+        dangerouslySetInnerHTML), Supabase RLS policy gaps, and general code
+        quality (readability, naming, DRY).
+    - path: "app/api/**"
+      instructions: >
+        Pay extra attention to: input validation, authentication checks,
+        authorization (RLS or manual), error handling that avoids leaking
+        internals, and rate limiting concerns.
+    - path: "middleware.js"
+      instructions: >
+        Review for security: route protection correctness, JWT/session
+        validation, and any bypass risks.
+    - path: "**/*.{css,scss}"
+      instructions: >
+        Check for accessibility (contrast, focus states), responsive design,
+        and CSS best practices.
+
+chat:
+  auto_reply: true
