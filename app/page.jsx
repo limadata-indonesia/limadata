@@ -25,18 +25,18 @@ export const metadata = {
     follow: true,
     googleBot: { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large" },
   },
-  alternates: { canonical: "https://limadata.co.id" },
+  alternates: { canonical: "https://limadata.web.id" },
   openGraph: {
     title: "Trusted SEO Agency in Indonesia | Limadata",
     description:
       "Indonesia's SEO agency helping businesses reach #1 on Google and appear in AI Overviews, ChatGPT & Gemini. Free audit in 48 hours.",
-    url: "https://limadata.co.id",
+    url: "https://limadata.web.id",
     siteName: "Limadata",
     locale: "en_US",
     type: "website",
     images: [
       {
-        url: "https://limadata.co.id/wp-content/uploads/2026/06/LOGO-LIMADATA-scaled-200x55.png",
+        url: "https://limadata.web.id/logo-limadata.png",
         width: 1200,
         height: 630,
         alt: "Limadata — Trusted SEO Agency in Indonesia",
@@ -48,7 +48,7 @@ export const metadata = {
     title: "Trusted SEO Agency in Indonesia | Limadata",
     description:
       "Indonesia's SEO agency helping businesses reach #1 on Google and appear in AI Overviews, ChatGPT & Gemini.",
-    images: ["https://limadata.co.id/wp-content/uploads/2026/06/LOGO-LIMADATA-scaled-200x55.png"],
+    images: ["https://limadata.web.id/logo-limadata.png"],
   },
 };
 
@@ -56,17 +56,17 @@ const jsonLd = [
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "@id": "https://limadata.co.id/#website",
-    url: "https://limadata.co.id",
+    "@id": "https://limadata.web.id/#website",
+    url: "https://limadata.web.id",
     name: "Limadata",
     description: "Indonesia's trusted SEO & GEO agency",
-    publisher: { "@id": "https://limadata.co.id/#organization" },
+    publisher: { "@id": "https://limadata.web.id/#organization" },
     inLanguage: "id",
     potentialAction: {
       "@type": "SearchAction",
       target: {
         "@type": "EntryPoint",
-        urlTemplate: "https://limadata.co.id/articles?q={search_term_string}",
+        urlTemplate: "https://limadata.web.id/articles?q={search_term_string}",
       },
       "query-input": "required name=search_term_string",
     },
@@ -74,13 +74,13 @@ const jsonLd = [
   {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "@id": "https://limadata.co.id/#organization",
+    "@id": "https://limadata.web.id/#organization",
     name: "Limadata",
     alternateName: "PT Lima Data Digital",
-    url: "https://limadata.co.id",
+    url: "https://limadata.web.id",
     logo: {
       "@type": "ImageObject",
-      url: "https://limadata.co.id/wp-content/uploads/2026/06/LOGO-LIMADATA-scaled-200x55.png",
+      url: "https://limadata.web.id/logo-limadata.png",
       width: 200,
       height: 55,
     },
@@ -95,7 +95,7 @@ const jsonLd = [
     },
     contactPoint: {
       "@type": "ContactPoint",
-      email: "hello@limadata.co.id",
+      email: "info@limadata.web.id",
       contactType: "customer service",
       availableLanguage: ["Indonesian", "English"],
     },
@@ -109,12 +109,12 @@ const jsonLd = [
   {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
-    "@id": "https://limadata.co.id/#business",
+    "@id": "https://limadata.web.id/#business",
     name: "Limadata — Jasa SEO Indonesia",
-    image: "https://limadata.co.id/wp-content/uploads/2026/06/LOGO-LIMADATA-scaled-200x55.png",
+    image: "https://limadata.web.id/logo-limadata.png",
     description:
       "Jasa SEO Indonesia profesional: keyword research, on-page & technical SEO, link building, content strategy, GEO & AI visibility, SEM, serta web & app development.",
-    url: "https://limadata.co.id",
+    url: "https://limadata.web.id",
     priceRange: "$$",
     telephone: "+62-21-5012-3456",
     address: {
@@ -180,18 +180,18 @@ const jsonLd = [
   {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "@id": "https://limadata.co.id/#webpage",
-    url: "https://limadata.co.id",
+    "@id": "https://limadata.web.id/#webpage",
+    url: "https://limadata.web.id",
     name: "Jasa SEO Indonesia Terpercaya | Limadata",
     description:
       "Limadata adalah jasa SEO Indonesia terpercaya. Kami membantu bisnis Indonesia raih peringkat #1 di Google, tampil di AI Overview, ChatGPT & Gemini.",
     inLanguage: ["id", "en"],
-    isPartOf: { "@id": "https://limadata.co.id/#website" },
-    about: { "@id": "https://limadata.co.id/#business" },
+    isPartOf: { "@id": "https://limadata.web.id/#website" },
+    about: { "@id": "https://limadata.web.id/#business" },
     breadcrumb: {
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: "https://limadata.co.id" },
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://limadata.web.id" },
       ],
     },
   },

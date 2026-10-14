@@ -19,11 +19,11 @@ export async function generateMetadata({ params }) {
     return {
       title: `${cs.company} Case Study | Limadata`,
       description: cs.description,
-      alternates: { canonical: `https://limadata.co.id/case-studies/${params.slug}` },
+      alternates: { canonical: `https://limadata.web.id/case-studies/${params.slug}` },
       openGraph: {
         title: `${cs.company} Case Study | Limadata`,
         description: cs.description,
-        url: `https://limadata.co.id/case-studies/${params.slug}`,
+        url: `https://limadata.web.id/case-studies/${params.slug}`,
         siteName: "Limadata", locale: "id_ID", type: "article",
       },
     };

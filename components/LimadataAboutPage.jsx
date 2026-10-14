@@ -314,7 +314,7 @@ export default function AboutPage({ about }) {
             We'll analyse your Google rankings, site health, and AI search presence — then send you a prioritised report within 48 hours, free of charge.
           </p>
           <div style={{ display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap" }}>
-            <a href="mailto:hello@limadata.co.id" style={{ background: B.orange, color: B.white, fontWeight: 600, fontSize: 14, padding: "14px 32px", borderRadius: 999, textDecoration: "none", boxShadow: `0 0 60px rgba(232,96,26,0.5)` }}>
+            <a href="mailto:info@limadata.web.id" style={{ background: B.orange, color: B.white, fontWeight: 600, fontSize: 14, padding: "14px 32px", borderRadius: 999, textDecoration: "none", boxShadow: `0 0 60px rgba(232,96,26,0.5)` }}>
               Request Free Audit
             </a>
             <Link href="/" style={{ border: `1px solid ${B.border}`, color: B.dim, fontWeight: 600, fontSize: 14, padding: "14px 32px", borderRadius: 999, textDecoration: "none" }}>

@@ -44,7 +44,7 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: 14 }}>
             <label style={{ display: "block", color: "rgba(255,255,255,0.6)", fontSize: 13, fontWeight: 500, marginBottom: 6 }}>Email</label>
-            <input type="email" value={email} onChange={e => setEmail(e.target.value)} required style={field} placeholder="you@limadata.co.id" />
+            <input type="email" value={email} onChange={e => setEmail(e.target.value)} required style={field} placeholder="you@limadata.web.id" />
           </div>
           <div style={{ marginBottom: 22 }}>
             <label style={{ display: "block", color: "rgba(255,255,255,0.6)", fontSize: 13, fontWeight: 500, marginBottom: 6 }}>Password</label>

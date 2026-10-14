@@ -279,7 +279,7 @@ function Footer() {
             { label: "Results",         href: "/#results"      },
             { label: "FAQ",             href: "/#faq"          },
             { label: "Free SEO Audit",  href: "/#cta"          },
-            { label: "limadata.co.id",  href: "https://limadata.co.id", external: true },
+            { label: "limadata.web.id",  href: "https://limadata.web.id", external: true },
           ].map(({ label, href, external }) => (
             <a key={label} href={href} style={lnk}
               {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
@@ -291,10 +291,10 @@ function Footer() {
 
         <div style={col}>
           <p style={{ color: B.white, fontSize: 13, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 4 }}>Contact</p>
-          <a href="mailto:hello@limadata.co.id" style={{ ...lnk, color: B.orange }}
+          <a href="mailto:info@limadata.web.id" style={{ ...lnk, color: B.orange }}
             onMouseEnter={e => e.currentTarget.style.opacity = "0.7"}
             onMouseLeave={e => e.currentTarget.style.opacity = "1"}
-          >hello@limadata.co.id</a>
+          >info@limadata.web.id</a>
           <address style={{ ...lnk, fontStyle: "normal" }}>
             Jl. Jend. Sudirman Kav. 52–53<br />
             Jakarta Selatan 12190<br />

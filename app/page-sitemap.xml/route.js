@@ -1,4 +1,4 @@
-const BASE_URL = "https://limadata.co.id";
+const BASE_URL = "https://limadata.web.id";
 const now = new Date().toISOString();
 
 const PAGES = [

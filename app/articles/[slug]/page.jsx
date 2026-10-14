@@ -22,10 +22,10 @@ export async function generateMetadata({ params }) {
     return {
       title: `${seoTitle} | Limadata`,
       description: seoDesc,
-      alternates: { canonical: `https://limadata.co.id/articles/${params.slug}` },
+      alternates: { canonical: `https://limadata.web.id/articles/${params.slug}` },
       openGraph: {
         title: seoTitle, description: seoDesc,
-        url: `https://limadata.co.id/articles/${params.slug}`,
+        url: `https://limadata.web.id/articles/${params.slug}`,
         siteName: "Limadata", locale: "id_ID", type: "article",
       },
       twitter: { card: "summary_large_image", title: seoTitle, description: seoDesc },
@@ -56,8 +56,8 @@ export default async function Page({ params }) {
     "@context": "https://schema.org", "@type": "Article",
     headline: article.title, description: article.excerpt, datePublished: article.date,
     author: { "@type": "Person", name: article.author_name },
-    publisher: { "@type": "Organization", name: "Limadata", logo: { "@type": "ImageObject", url: "https://limadata.co.id/wp-content/uploads/2026/06/LOGO-LIMADATA-scaled-200x55.png" } },
-    mainEntityOfPage: { "@type": "WebPage", "@id": `https://limadata.co.id/articles/${params.slug}` },
+    publisher: { "@type": "Organization", name: "Limadata", logo: { "@type": "ImageObject", url: "https://limadata.web.id/logo-limadata.png" } },
+    mainEntityOfPage: { "@type": "WebPage", "@id": `https://limadata.web.id/articles/${params.slug}` },
   };
 
   return (

@@ -1,6 +1,6 @@
 import { createClient } from "../../lib/supabase-server";
 
-const BASE_URL = "https://limadata.co.id";
+const BASE_URL = "https://limadata.web.id";
 
 export async function GET() {
   const supabase = createClient();

@@ -350,7 +350,7 @@ export default function CaseStudyPage({ cs }) {
           </p>
           <div style={{ display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap" }}>
             <a
-              href="mailto:hello@limadata.co.id"
+              href="mailto:info@limadata.web.id"
               style={{ background: B.orange, color: B.white, fontWeight: 600, fontSize: 14, padding: "14px 32px", borderRadius: 999, textDecoration: "none", boxShadow: `0 0 60px rgba(232,96,26,0.5)` }}
               onMouseEnter={e => { e.currentTarget.style.opacity = "0.88"; e.currentTarget.style.transform = "scale(1.04)"; }}
               onMouseLeave={e => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "scale(1)"; }}

@@ -31,13 +31,21 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     remotePatterns: [
-      { protocol: "https", hostname: "limadata.co.id" },
+      { protocol: "https", hostname: "limadata.web.id" },
     ],
     formats: ["image/avif", "image/webp"],
   },
   compress: true,
   async headers() {
     return [{ source: "/(.*)", headers: securityHeaders }];
+  },
+  async redirects() {
+    return [{
+      source: "/:path*",
+      has: [{ type: "host", value: "www.limadata.web.id" }],
+      destination: "https://limadata.web.id/:path*",
+      permanent: true,
+    }];
   },
 };
 export default nextConfig;

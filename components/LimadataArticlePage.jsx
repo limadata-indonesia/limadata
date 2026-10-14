@@ -355,7 +355,7 @@ export default function ArticlePage({ article }) {
           </p>
           <div style={{ display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap" }}>
             <a
-              href="mailto:hello@limadata.co.id"
+              href="mailto:info@limadata.web.id"
               style={{
                 background: B.orange, color: B.white,
                 fontWeight: 600, fontSize: 14,

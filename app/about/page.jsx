@@ -4,11 +4,11 @@ import AboutPage from "../../components/LimadataAboutPage";
 export const metadata = {
   title: "About Limadata | SEO & GEO Agency in Indonesia",
   description: "Learn about Limadata — Indonesia's data-driven SEO and Generative Engine Optimization agency helping businesses grow organic traffic.",
-  alternates: { canonical: "https://limadata.co.id/about" },
+  alternates: { canonical: "https://limadata.web.id/about" },
   openGraph: {
     title: "About Limadata | SEO & GEO Agency in Indonesia",
     description: "Learn about Limadata — Indonesia's data-driven SEO and GEO agency.",
-    url: "https://limadata.co.id/about",
+    url: "https://limadata.web.id/about",
     siteName: "Limadata", locale: "en_US",
   },
 };

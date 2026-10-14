@@ -16,7 +16,7 @@ function scanLinks(html) {
   const matches = [...html.matchAll(/href="([^"]+)"/g)];
   let internal = 0, external = 0;
   matches.forEach(([, href]) => {
-    if (href.startsWith("/") || href.includes("limadata.co.id")) internal++;
+    if (href.startsWith("/") || href.includes("limadata.web.id")) internal++;
     else if (href.startsWith("http")) external++;
   });
   return { internal, external };
@@ -55,7 +55,7 @@ function CharBar({ value, min, max }) {
 
 /* ── Yoast-style SEO panel ─────────────────────────── */
 function SeoPanel({ form, set, inp, lbl }) {
-  const BASE    = "limadata.co.id";
+  const BASE    = "limadata.web.id";
   const title   = form.meta_title    || form.title;
   const desc    = form.meta_description || form.excerpt;
   const keyword = (form.focus_keyword || "").toLowerCase().trim();

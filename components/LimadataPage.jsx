@@ -1510,7 +1510,7 @@ function CTA() {
           className="flex items-center justify-center gap-4 flex-wrap"
         >
           <a
-            href="mailto:hello@limadata.co.id"
+            href="mailto:info@limadata.web.id"
             className="font-semibold px-10 py-4 rounded-full text-sm transition-all duration-200 hover:scale-105"
             style={{
               background: B.orange,
@@ -1731,12 +1731,12 @@ function Footer() {
               <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
             </svg>
             <a
-              href="mailto:hello@limadata.co.id"
+              href="mailto:info@limadata.web.id"
               style={link}
               onMouseEnter={e => e.currentTarget.style.color = B.orange}
               onMouseLeave={e => e.currentTarget.style.color = B.muted}
             >
-              hello@limadata.co.id
+              info@limadata.web.id
             </a>
           </div>
 

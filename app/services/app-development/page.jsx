@@ -16,7 +16,7 @@ const schema = {
   "@type": "Service",
   name: "App Development Services Indonesia",
   description: s.metaDesc,
-  provider: { "@type": "Organization", name: "Limadata", url: "https://limadata.co.id" },
+  provider: { "@type": "Organization", name: "Limadata", url: "https://limadata.web.id" },
   areaServed: { "@type": "Country", name: "Indonesia" },
   url: s.canonical,
   serviceType: "Mobile & Web App Development",
